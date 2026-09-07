@@ -1,0 +1,139 @@
+<!-- Floating Cart Trigger Button -->
+<button @click="isCartOpen = true" 
+        class="fixed bottom-6 right-6 z-30 bg-[#7A1F2B] hover:bg-[#3D0F15] text-white p-4 rounded-full shadow-2xl transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center border-2 border-[#C9A227]/40 group"
+        aria-label="Keranjang Pesanan">
+    <svg class="w-6 h-6 text-[#C9A227]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+    </svg>
+    <span x-show="cartCount > 0" 
+          x-text="cartCount"
+          class="absolute -top-1.5 -right-1.5 bg-[#C9A227] text-[#241B16] font-bold text-xs w-6 h-6 flex items-center justify-center rounded-full shadow border-2 border-white">
+    </span>
+</button>
+
+<!-- Slide-Over Drawer -->
+<div x-show="isCartOpen" 
+     class="fixed inset-0 z-50 overflow-hidden" 
+     style="display: none;"
+     x-cloak>
+    
+    <!-- Backdrop -->
+    <div x-show="isCartOpen"
+         x-transition:enter="ease-in-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="ease-in-out duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @click="isCartOpen = false"
+         class="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"></div>
+
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+        <div x-show="isCartOpen"
+             x-transition:enter="transform transition ease-in-out duration-300 sm:duration-400"
+             x-transition:enter-start="translate-x-full"
+             x-transition:enter-end="translate-x-0"
+             x-transition:leave="transform transition ease-in-out duration-300 sm:duration-400"
+             x-transition:leave-start="translate-x-0"
+             x-transition:leave-end="translate-x-full"
+             class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+            
+            <!-- Drawer Header -->
+            <div class="p-6 bg-[#7A1F2B] text-white flex items-center justify-between border-b border-[#C9A227]/30">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-full bg-[#C9A227]/20 flex items-center justify-center text-[#C9A227]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="font-serif font-bold text-xl leading-tight">Keranjang Pesanan</h2>
+                        <span class="text-xs text-white/80">Cabang: <strong x-text="selectedBranch"></strong></span>
+                    </div>
+                </div>
+                <button @click="isCartOpen = false" class="p-1 rounded-lg text-white/80 hover:text-white hover:bg-white/10 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Drawer Items -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-4">
+                <template x-if="cart.length === 0">
+                    <div class="text-center py-16">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-[#F5EFE2] flex items-center justify-center text-[#7A1F2B]/40 mb-4">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-serif font-bold text-lg text-[#241B16]">Keranjang Masih Kosong</h4>
+                        <p class="text-sm text-[#241B16]/60 mt-1 max-w-xs mx-auto">
+                            Pilih hidangan masakan Padang autentik favorit Anda untuk mulai memesan.
+                        </p>
+                        <button @click="isCartOpen = false" class="mt-6 bg-[#7A1F2B] text-white px-6 py-2.5 rounded-xl font-medium text-sm hover:bg-[#3D0F15] transition-all">
+                            Lihat Pilihan Menu
+                        </button>
+                    </div>
+                </template>
+
+                <template x-for="item in cart" :key="item.id">
+                    <div class="flex items-center space-x-3 p-3 bg-[#F5EFE2]/70 rounded-2xl border border-[#C9A227]/20">
+                        <img :src="item.foto" :alt="item.nama" class="w-16 h-16 rounded-xl object-cover flex-shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-sm text-[#241B16] truncate" x-text="item.nama"></h4>
+                            <span class="text-xs font-semibold text-[#7A1F2B]" x-text="formatRupiah(item.harga)"></span>
+                            
+                            <div class="flex items-center space-x-2 mt-2">
+                                <button @click="updateQuantity(item.id, -1)" 
+                                        class="w-6 h-6 rounded-md bg-white border border-[#241B16]/20 flex items-center justify-center text-[#241B16] hover:bg-[#7A1F2B] hover:text-white transition-colors text-xs font-bold">
+                                    -
+                                </button>
+                                <span class="text-xs font-bold text-[#241B16] w-6 text-center" x-text="item.quantity"></span>
+                                <button @click="updateQuantity(item.id, 1)" 
+                                        class="w-6 h-6 rounded-md bg-white border border-[#241B16]/20 flex items-center justify-center text-[#241B16] hover:bg-[#7A1F2B] hover:text-white transition-colors text-xs font-bold">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-bold text-[#241B16] block mb-2" x-text="formatRupiah(item.harga * item.quantity)"></span>
+                            <button @click="removeFromCart(item.id)" class="text-rose-600 hover:text-rose-800 text-xs p-1" title="Hapus">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Drawer Footer / Checkout -->
+            <div x-show="cart.length > 0" class="p-6 bg-[#F5EFE2] border-t border-[#C9A227]/30 space-y-4">
+                <div class="flex items-center justify-between text-sm text-[#241B16]/80">
+                    <span>Jumlah Menu:</span>
+                    <span class="font-bold" x-text="cartCount + ' Porsi'"></span>
+                </div>
+                <div class="flex items-center justify-between text-base font-bold text-[#241B16] pt-2 border-t border-[#C9A227]/20">
+                    <span>Total Tagihan:</span>
+                    <span class="text-xl text-[#7A1F2B]" x-text="formatRupiah(cartTotal)"></span>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <button @click="checkoutWhatsApp()" 
+                            class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3.5 px-4 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.981.536 1.769.814 2.796.815 3.182 0 5.767-2.587 5.768-5.766.001-3.181-2.585-5.801-5.768-5.801zm3.376 8.21c-.144.405-.837.774-1.17.824-.312.045-.634.072-1.849-.434-1.554-.647-2.548-2.222-2.627-2.327-.078-.105-.626-.832-.626-1.586 0-.754.394-1.125.533-1.282.144-.158.314-.197.419-.197.105 0 .21.002.302.007.098.005.229-.037.358.272.131.315.446 1.088.486 1.168.039.079.066.171.013.276-.053.105-.079.171-.157.263-.079.092-.165.205-.236.276-.079.079-.161.165-.069.322.092.158.408.673.875 1.089.601.535 1.109.7 1.267.779.158.079.25.066.342-.039.092-.105.394-.459.5-.617.105-.158.21-.131.354-.079.144.053.918.433 1.076.512.158.079.263.118.302.184.039.065.039.38-.105.785z"/>
+                        </svg>
+                        <span>Pesan via WhatsApp (Cabang <span x-text="selectedBranch"></span>)</span>
+                    </button>
+                    
+                    <button @click="clearCart()" class="w-full text-xs text-[#241B16]/60 hover:text-rose-700 py-1 font-medium transition-colors">
+                        Kosongkan Keranjang
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

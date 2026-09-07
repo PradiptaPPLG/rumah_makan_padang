@@ -1,38 +1,27 @@
-# Frontend (.gitignore)
-frontend/.next/
-frontend/node_modules/
-frontend/.env
-frontend/.env.local
-frontend/.env.*.local
-frontend/out/
-
-# Backend (.gitignore)
-backend/vendor/
-backend/.env
-backend/.env.local
-backend/composer.lock
-backend/storage/logs/*
-backend/storage/framework/cache/*
-backend/storage/framework/sessions/*
-backend/storage/framework/views/*
-backend/storage/app/*
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Testing
-coverage/
+.DS_Store
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+/.codex
+/.cursor/
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+/public/build
+/public/fonts-manifest.dev.json
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+_ide_helper.php
+Homestead.json
+Homestead.yaml
+Thumbs.db
