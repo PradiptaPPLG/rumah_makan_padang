@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Api\OrderController as ApiOrderController;
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\MenuController;
@@ -19,10 +20,21 @@ Route::post('/orders', [ApiOrderController::class, 'store'])->name('orders.store
 
 /*
 |--------------------------------------------------------------------------
-| Admin Panel Routes
+| Admin Auth Routes (Guest only)
 |--------------------------------------------------------------------------
 */
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('admin.login.submit');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout')->middleware('auth');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Protected Admin Panel Routes (Auth Required)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Orders Management

@@ -9,6 +9,8 @@ use App\Models\BranchMenuPrice;
 use App\Models\Review;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +19,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // 0. Seed Default Admin User
+        User::updateOrCreate(
+            ['email' => 'admin@rasominang.com'],
+            [
+                'name' => 'Administrator Raso Minang',
+                'password' => Hash::make('password'),
+            ]
+        );
+
         // 1. Seed Branches
         $branchesData = [
             [
