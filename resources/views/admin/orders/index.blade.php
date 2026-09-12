@@ -7,8 +7,9 @@
 <div x-data="{ selectedOrder: null, isDetailModalOpen: false }" class="space-y-5">
     
     <!-- Clean Filter Bar -->
-    <div class="bg-white p-4 rounded-2xl border border-neutral-200/80 shadow-xs">
-        <form method="GET" action="{{ route('admin.orders.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-end">
+    <div class="bg-white p-5 rounded-3xl border border-[#C9A227]/20 shadow-[0_4px_20px_rgba(201,162,39,0.05)] relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/batik-stripes.png')] pointer-events-none"></div>
+        <form method="GET" action="{{ route('admin.orders.index') }}" class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
             <div>
                 <label class="block text-[11px] font-semibold text-neutral-500 mb-1 uppercase tracking-wider">Status Pesanan</label>
                 <select name="status" class="w-full text-xs py-2 px-3 rounded-xl border border-neutral-300 bg-white font-medium focus:ring-1 focus:ring-[#7A1F2B] outline-none">
@@ -55,7 +56,7 @@
     </div>
 
     <!-- Orders Table -->
-    <div class="bg-white rounded-2xl border border-neutral-200/80 shadow-xs overflow-hidden">
+    <div class="bg-white rounded-3xl border border-[#C9A227]/20 shadow-[0_4px_20px_rgba(201,162,39,0.05)] overflow-hidden">
         <div class="p-4 border-b border-neutral-200/80 flex items-center justify-between">
             <span class="text-xs font-semibold text-neutral-500">
                 Menampilkan <strong class="text-neutral-900">{{ $orders->total() }}</strong> total pesanan
@@ -63,16 +64,16 @@
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-                <thead class="bg-neutral-50/70 border-b border-neutral-200/80 text-[11px] font-semibold text-neutral-500 uppercase tracking-wider">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-[#F5EFE2]/50 border-b border-[#C9A227]/20 text-xs font-bold text-[#7A1F2B] uppercase tracking-widest font-serif">
                     <tr>
-                        <th class="py-3 px-5">ID & Waktu</th>
-                        <th class="py-3 px-5">Pelanggan</th>
-                        <th class="py-3 px-5">Cabang & Metode</th>
-                        <th class="py-3 px-5">Menu Dipesan</th>
-                        <th class="py-3 px-5">Total Tagihan</th>
-                        <th class="py-3 px-5">Status Dapur</th>
-                        <th class="py-3 px-5 text-right">Aksi</th>
+                        <th class="py-4 px-6">ID & Waktu</th>
+                        <th class="py-4 px-6">Pelanggan</th>
+                        <th class="py-4 px-6">Cabang & Metode</th>
+                        <th class="py-4 px-6">Menu Dipesan</th>
+                        <th class="py-4 px-6">Total Tagihan</th>
+                        <th class="py-4 px-6">Status Dapur</th>
+                        <th class="py-4 px-6 text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-neutral-100">
@@ -95,31 +96,31 @@
                                 {{ $order->method }}
                             </span>
                         </td>
-                        <td class="py-3.5 px-5 max-w-xs">
+                        <td class="py-4 px-6 max-w-xs">
                             <p class="truncate text-neutral-600 font-normal">
                                 @foreach($order->items as $idx => $it)
                                     {{ $it->quantity }}x {{ $it->menuItem->nama ?? 'Item' }}{{ !$loop->last ? ',' : '' }}
                                 @endforeach
                             </p>
                             @if($order->notes)
-                            <span class="text-[10px] text-amber-700 block truncate mt-0.5">
+                            <span class="text-[11px] text-[#7A1F2B] font-medium block truncate mt-1">
                                 Catatan: {{ $order->notes }}
                             </span>
                             @endif
                         </td>
-                        <td class="py-3.5 px-5 font-bold text-neutral-900 whitespace-nowrap">
+                        <td class="py-4 px-6 font-bold text-[#7A1F2B] text-base whitespace-nowrap">
                             Rp {{ number_format($order->total, 0, ',', '.') }}
                         </td>
-                        <td class="py-3.5 px-5 whitespace-nowrap">
+                        <td class="py-4 px-6 whitespace-nowrap">
                             <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST">
                                 @csrf
-                                <select name="status" onchange="this.form.submit()" class="text-[11px] font-medium py-1 px-2.5 rounded-full border
-                                    @if($order->status === 'pending') bg-amber-50 text-amber-700 border-amber-200/80
-                                    @elseif($order->status === 'confirmed') bg-blue-50 text-blue-700 border-blue-200/80
-                                    @elseif($order->status === 'cooking') bg-orange-50 text-orange-700 border-orange-200/80
-                                    @elseif($order->status === 'ready') bg-purple-50 text-purple-700 border-purple-200/80
-                                    @elseif($order->status === 'completed') bg-emerald-50 text-emerald-700 border-emerald-200/80
-                                    @else bg-rose-50 text-rose-700 border-rose-200/80 @endif">
+                                <select name="status" onchange="this.form.submit()" class="text-xs font-bold py-1.5 px-3 rounded-full border cursor-pointer outline-none shadow-sm transition-all
+                                    @if($order->status === 'pending') bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100
+                                    @elseif($order->status === 'confirmed') bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100
+                                    @elseif($order->status === 'cooking') bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100
+                                    @elseif($order->status === 'ready') bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100
+                                    @elseif($order->status === 'completed') bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100
+                                    @else bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 @endif">
                                     @foreach(\App\Models\Order::STATUSES as $st)
                                         <option value="{{ $st }}" {{ $order->status === $st ? 'selected' : '' }}>
                                             {{ ucfirst($st) }}

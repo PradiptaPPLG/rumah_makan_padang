@@ -113,6 +113,9 @@
                 
                 <!-- Order Options -->
                 <div class="space-y-3 pb-3 border-b border-[#C9A227]/20">
+                    <div>
+                        <input type="text" x-model="customerName" placeholder="Atas Nama (Mis: Budi / Gojek / Bawa Sendiri)" class="w-full text-sm px-3 py-2 rounded-lg border border-[#C9A227]/30 bg-white/60 focus:bg-white focus:border-[#C9A227] focus:ring focus:ring-[#C9A227]/20 transition-colors">
+                    </div>
                     <div class="flex items-center space-x-4">
                         <label class="flex items-center space-x-2 cursor-pointer">
                             <input type="radio" x-model="orderType" value="dine-in" class="form-radio text-[#7A1F2B] focus:ring-[#7A1F2B]">

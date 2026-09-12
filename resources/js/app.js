@@ -14,6 +14,7 @@ document.addEventListener('alpine:init', () => {
         isNavbarHidden: false,
         orderType: 'dine-in', // 'dine-in' or 'takeaway'
         tableNumber: '',
+        customerName: '',
         orderNotes: '',
         cart: [],
         notificationMessage: '',
@@ -131,6 +132,7 @@ document.addEventListener('alpine:init', () => {
                     branch_id: 1, 
                     order_type: this.orderType === 'dine-in' ? 'dine_in' : 'takeaway',
                     table_number: this.tableNumber,
+                    customer_name: this.customerName,
                     notes: this.orderNotes,
                     items: this.cart.map(item => ({
                         menu_item_id: item.id,
