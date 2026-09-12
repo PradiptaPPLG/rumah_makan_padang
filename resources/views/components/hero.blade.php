@@ -78,8 +78,6 @@
                             <span class="bg-[#C9A227] text-[#241B16] text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                                 Signature Dish
                             </span>
-                            <h3 class="font-serif font-bold text-xl mt-1 text-white">Rendang Daging Payakumbuh</h3>
-                            <p class="text-xs text-white/80">Dimasak 8 Jam dengan Rempah Warisan 1950</p>
                         </div>
                     </div>
 
