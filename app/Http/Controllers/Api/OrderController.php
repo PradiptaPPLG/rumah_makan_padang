@@ -127,6 +127,30 @@ class OrderController extends Controller
         ]);
     }
 
+    public function showSearch()
+    {
+        return view('order-search');
+    }
+
+    public function processSearch(Request $request)
+    {
+        $request->validate([
+            'order_code' => 'required|string',
+        ]);
+
+        $code = trim($request->order_code);
+
+        $order = Order::where('order_number', $code)
+            ->orWhere('qr_code_token', $code)
+            ->first();
+
+        if (!$order) {
+            return back()->with('error', 'Maaf, pesanan dengan kode tersebut tidak ditemukan.')->withInput();
+        }
+
+        return redirect()->route('order.status', ['token' => $order->qr_code_token]);
+    }
+
     public function orderStatus(string $token)
     {
         $order = Order::with(['items.menuItem', 'branch'])

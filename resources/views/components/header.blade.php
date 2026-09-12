@@ -28,6 +28,13 @@
                     Ulasan
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#7A1F2B] transition-all duration-200 group-hover:w-full"></span>
                 </a>
+                <a href="{{ route('order.search.form') }}" class="text-[#7A1F2B] font-bold hover:text-[#5a1620] transition-colors relative group py-1 flex items-center space-x-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <span>Cari Pesanan</span>
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[#7A1F2B] transition-all duration-200 group-hover:w-full"></span>
+                </a>
 
                 <!-- Selected branch badge indicator -->
                 <div class="flex items-center space-x-1.5 bg-[#C9A227]/15 border border-[#C9A227]/30 px-3 py-1 rounded-full text-xs font-semibold text-[#7A1F2B]">
@@ -100,6 +107,12 @@
             <a href="#cabang" @click="isMobileMenuOpen = false" class="block font-medium py-2 text-[#241B16] hover:text-[#7A1F2B]">Pilih Cabang</a>
             <a href="#cerita" @click="isMobileMenuOpen = false" class="block font-medium py-2 text-[#241B16] hover:text-[#7A1F2B]">Cerita Kami</a>
             <a href="#ulasan" @click="isMobileMenuOpen = false" class="block font-medium py-2 text-[#241B16] hover:text-[#7A1F2B]">Ulasan</a>
+            <a href="{{ route('order.search.form') }}" class="block font-bold py-2 text-[#7A1F2B] hover:text-[#5a1620] border-b border-[#C9A227]/20 flex items-center space-x-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <span>Cari Pesanan Saya</span>
+            </a>
             <div class="pt-2 border-t border-[#C9A227]/20 flex items-center justify-between">
                 <span class="text-xs text-[#241B16]/70">Cabang saat ini:</span>
                 <span class="text-xs font-bold text-[#7A1F2B]" x-text="selectedBranch"></span>

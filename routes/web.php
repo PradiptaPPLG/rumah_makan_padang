@@ -18,6 +18,10 @@ use App\Http\Controllers\Admin\ReviewController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/orders', [ApiOrderController::class, 'store'])->name('orders.store');
 
+// Halaman form cari pesanan pelanggan
+Route::get('/cek-pesanan', [ApiOrderController::class, 'showSearch'])->name('order.search.form');
+Route::post('/cek-pesanan', [ApiOrderController::class, 'processSearch'])->name('order.search.submit');
+
 // Halaman status order customer — tampilkan QR Order dan status pesanan (BRD CUS-08)
 Route::get('/pesanan/{token}', [ApiOrderController::class, 'orderStatus'])->name('order.status');
 
@@ -45,6 +49,10 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
     Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+    // POS Cashier Scanner
+    Route::get('/pos', [\App\Http\Controllers\Admin\PosController::class, 'index'])->name('pos.index');
+    Route::post('/pos/find-order', [\App\Http\Controllers\Admin\PosController::class, 'findOrder'])->name('pos.findOrder');
 
     // Menu Management
     Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
