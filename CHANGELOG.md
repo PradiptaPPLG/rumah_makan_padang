@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Model `Package` dengan relasi `belongsToMany` ke `MenuItem` melalui `package_items`.
 - Model `PackageItem` sebagai pivot model antara `Package` dan `MenuItem`.
 - Model `Shift` dengan relasi ke `User` (cashier) dan `Branch`, scope `open()`.
+- Menghapus fitur checkout WhatsApp dari `cart-drawer` dan mengubahnya menjadi pemanggilan API `POST /api/v1/orders`.
+- Membuat halaman status pesanan (`order-status.blade.php`) beserta route GET `/pesanan/{token}` yang menampilkan QR Code untuk discan oleh kasir (Sesuai dengan BRD CUS-07 & CUS-08).
+- Method `orderStatus` di `ApiOrderController` untuk merender halaman order status.
 - Setup awal Laravel Boost dan panduan AI Agent (`.agents/`, `boost.json`, `AGENTS.md`).
 - Instalasi dependensi npm dan build Vite.
 - Pengaturan environment database awal.

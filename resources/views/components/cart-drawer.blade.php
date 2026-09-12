@@ -143,12 +143,12 @@
                 </div>
 
                 <div class="space-y-2 pt-2">
-                    <button @click="checkoutWhatsApp()" 
-                            class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-3.5 px-4 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2">
-                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.981.536 1.769.814 2.796.815 3.182 0 5.767-2.587 5.768-5.766.001-3.181-2.585-5.801-5.768-5.801zm3.376 8.21c-.144.405-.837.774-1.17.824-.312.045-.634.072-1.849-.434-1.554-.647-2.548-2.222-2.627-2.327-.078-.105-.626-.832-.626-1.586 0-.754.394-1.125.533-1.282.144-.158.314-.197.419-.197.105 0 .21.002.302.007.098.005.229-.037.358.272.131.315.446 1.088.486 1.168.039.079.066.171.013.276-.053.105-.079.171-.157.263-.079.092-.165.205-.236.276-.079.079-.161.165-.069.322.092.158.408.673.875 1.089.601.535 1.109.7 1.267.779.158.079.25.066.342-.039.092-.105.394-.459.5-.617.105-.158.21-.131.354-.079.144.053.918.433 1.076.512.158.079.263.118.302.184.039.065.039.38-.105.785z"/>
+                    <button @click="checkout()" 
+                            class="w-full bg-[#C9A227] hover:bg-[#B38F23] text-[#241B16] py-3.5 px-4 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
-                        <span>Pesan via WhatsApp (Cabang <span x-text="selectedBranch"></span>)</span>
+                        <span>Konfirmasi Pesanan</span>
                     </button>
                     
                     <button @click="clearCart()" class="w-full text-xs text-[#241B16]/60 hover:text-rose-700 py-1 font-medium transition-colors">

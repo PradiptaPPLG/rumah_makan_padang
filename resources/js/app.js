@@ -120,30 +120,47 @@ document.addEventListener('alpine:init', () => {
             }, 2500);
         },
 
-        checkoutWhatsApp() {
+        async checkout() {
             if (this.cart.length === 0) return;
             
-            let message = `*HALO RASO MANDEH (${this.selectedBranch.toUpperCase()})*\n`;
-            message += `Saya ingin memesan hidangan berikut:\n\n`;
+            this.notify('Memproses pesanan...');
             
-            this.cart.forEach((item, i) => {
-                message += `${i + 1}. *${item.nama}* x${item.quantity} = ${this.formatRupiah(item.harga * item.quantity)}\n`;
-            });
-            
-            message += `\n*Tipe Pesanan:* ${this.orderType === 'dine-in' ? 'Makan di Tempat (Dine-in)' : 'Bungkus (Takeaway)'}\n`;
-            if (this.orderType === 'dine-in' && this.tableNumber.trim() !== '') {
-                message += `*Nomor Meja:* ${this.tableNumber}\n`;
-            }
-            if (this.orderNotes.trim() !== '') {
-                message += `*Catatan:* ${this.orderNotes}\n`;
-            }
+            try {
+                // Untuk versi MVP, asumsi branch_id = 1 karena data cabang belum dinamis di frontend
+                const payload = {
+                    branch_id: 1, 
+                    order_type: this.orderType === 'dine-in' ? 'dine_in' : 'takeaway',
+                    table_number: this.tableNumber,
+                    notes: this.orderNotes,
+                    items: this.cart.map(item => ({
+                        menu_item_id: item.id,
+                        quantity: item.quantity
+                    }))
+                };
 
-            message += `\n*Total Tagihan:* ${this.formatRupiah(this.cartTotal)}\n`;
-            message += `*Cabang Pemesanan:* ${this.selectedBranch}\n`;
-            message += `Mohon konfirmasi pesanan dan ketersediaan menu. Terima kasih!`;
-            
-            const encoded = encodeURIComponent(message);
-            window.open(`https://wa.me/6281234567890?text=${encoded}`, '_blank');
+                const response = await fetch('/api/v1/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    this.clearCart();
+                    // Redirect to order status page
+                    window.location.href = `/pesanan/${data.data.qr_code_token}`;
+                } else {
+                    this.notify(data.message || 'Gagal memproses pesanan');
+                }
+            } catch (error) {
+                console.error(error);
+                this.notify('Terjadi kesalahan jaringan.');
+            }
         }
     }));
 });

@@ -18,6 +18,9 @@ use App\Http\Controllers\Admin\ReviewController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/orders', [ApiOrderController::class, 'store'])->name('orders.store');
 
+// Halaman status order customer — tampilkan QR Order dan status pesanan (BRD CUS-08)
+Route::get('/pesanan/{token}', [ApiOrderController::class, 'orderStatus'])->name('order.status');
+
 /*
 |--------------------------------------------------------------------------
 | Admin Auth Routes (Guest only)

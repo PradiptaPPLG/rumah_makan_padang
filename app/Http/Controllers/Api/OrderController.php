@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BranchMenuPrice;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\BranchMenuPrice;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -34,48 +34,52 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'branch_id' => 'required|exists:branches,id',
-            'method' => 'required|in:dine-in,online,delivery',
+            'order_type' => 'nullable|in:dine_in,takeaway',
+            'table_number' => 'nullable|string|max:20',
             'customer_name' => 'nullable|string|max:255',
             'customer_phone' => 'nullable|string|max:20',
             'notes' => 'nullable|string',
-            'items' => 'required|array',
+            'items' => 'required|array|min:1',
             'items.*.menu_item_id' => 'required|exists:menu_items,id',
             'items.*.quantity' => 'required|integer|min:1',
             'items.*.notes' => 'nullable|string',
         ]);
 
-        // Get menu prices for validation
+        // Validasi ketersediaan menu dan hitung total (snapshot harga saat order — BR-03)
+        $items = [];
         foreach ($validated['items'] as $item) {
             $price = BranchMenuPrice::where('branch_id', $validated['branch_id'])
                 ->where('menu_item_id', $item['menu_item_id'])
                 ->first();
 
-            if (!$price || !$price->is_available) {
+            if (! $price || ! $price->is_available) {
                 return response()->json([
                     'success' => false,
-                    'message' => "Menu item {$item['menu_item_id']} is not available at this branch",
+                    'message' => "Menu dengan ID {$item['menu_item_id']} tidak tersedia di cabang ini.",
                 ], 422);
             }
 
-            $item['price'] = (int) $price->harga;
+            $items[] = array_merge($item, ['price' => (int) $price->harga]);
         }
 
-        // Calculate total
-        $total = collect($validated['items'])->sum(fn($item) => $item['quantity'] * $item['price']);
+        $total = collect($items)->sum(fn ($item) => $item['quantity'] * $item['price']);
 
-        // Create order
+        // Buat order; order_number & qr_code_token digenerate otomatis via Order::booted()
         $order = Order::create([
             'branch_id' => $validated['branch_id'],
-            'method' => $validated['method'],
+            'order_type' => $validated['order_type'] ?? 'dine_in',
+            'table_number' => $validated['table_number'] ?? null,
+            'source' => 'customer_web',
+            'method' => 'dine-in',
             'customer_name' => $validated['customer_name'] ?? null,
             'customer_phone' => $validated['customer_phone'] ?? null,
             'notes' => $validated['notes'] ?? null,
             'total' => $total,
             'status' => 'pending',
+            'payment_status' => 'unpaid',
         ]);
 
-        // Create order items
-        foreach ($validated['items'] as $item) {
+        foreach ($items as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'menu_item_id' => $item['menu_item_id'],
@@ -87,8 +91,17 @@ class OrderController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Order created successfully',
-            'data' => $order->load(['items.menuItem']),
+            'message' => 'Pesanan berhasil dibuat!',
+            'data' => [
+                'order_id' => $order->id,
+                'order_number' => $order->order_number,
+                'qr_code_token' => $order->qr_code_token,
+                'total' => $order->total,
+                'status' => $order->status,
+                'payment_status' => $order->payment_status,
+                'order_type' => $order->order_type,
+                'table_number' => $order->table_number,
+            ],
         ], 201);
     }
 
@@ -102,6 +115,27 @@ class OrderController extends Controller
         ]);
     }
 
+    public function showByToken(string $token)
+    {
+        $order = Order::with(['items.menuItem', 'branch'])
+            ->where('qr_code_token', $token)
+            ->firstOrFail();
+
+        return response()->json([
+            'success' => true,
+            'data' => $order,
+        ]);
+    }
+
+    public function orderStatus(string $token)
+    {
+        $order = Order::with(['items.menuItem', 'branch'])
+            ->where('qr_code_token', $token)
+            ->firstOrFail();
+
+        return view('order-status', compact('order'));
+    }
+
     public function updateStatus(Request $request, string $id)
     {
         $validated = $request->validate([
@@ -113,7 +147,7 @@ class OrderController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Order status updated',
+            'message' => 'Status pesanan diperbarui.',
             'data' => $order,
         ]);
     }
