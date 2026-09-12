@@ -59,7 +59,7 @@
             <div class="lg:col-span-5 relative">
                 <div class="relative mx-auto max-w-md">
                     <div class="absolute -inset-3 bg-gradient-to-tr from-[#7A1F2B]/20 to-[#C9A227]/20 rounded-3xl blur-xl"></div>
-                    <img src="https://images.unsplash.com/photo-1604152135912-04a12fc6b9c1?w=700&auto=format&fit=crop&q=80" 
+                    <img src="/dapur-raso-minang.webp" 
                          alt="Dapur Tradisional Raso Minang" 
                          class="relative z-10 w-full h-[400px] object-cover rounded-3xl shadow-xl border-4 border-white">
                     
