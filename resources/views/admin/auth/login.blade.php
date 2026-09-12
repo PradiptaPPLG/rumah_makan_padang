@@ -13,139 +13,131 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-[#F5EFE2] text-[#241B16] font-sans antialiased min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+<body class="bg-neutral-100 font-sans antialiased min-h-screen flex items-center justify-center relative overflow-hidden p-4">
 
-    <!-- Ambient Minang Glow Aura -->
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#C9A227]/15 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#7A1F2B]/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Blurred Background Image -->
+    <div class="absolute inset-0 z-0">
+        <img src="/dapur-raso-mandeh.webp" alt="Dapur Raso Mandeh" class="w-full h-full object-cover object-center scale-105" style="filter: brightness(0.6);">
+        <div class="absolute inset-0 bg-neutral-900/40 backdrop-blur-sm"></div>
+    </div>
 
-    <div class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border-t-4 border-[#7A1F2B] border-x border-b border-[#C9A227]/30 p-8 space-y-6">
+    <!-- Main Split Card -->
+    <div class="relative z-10 w-full max-w-[900px] bg-white shadow-2xl flex overflow-hidden rounded">
         
-        <!-- Brand Header -->
-        <div class="text-center space-y-2">
-            <div class="w-14 h-14 mx-auto rounded-full bg-gradient-to-br from-[#7A1F2B] to-[#3D0F15] flex items-center justify-center text-[#C9A227] font-serif font-bold text-2xl border-2 border-[#C9A227]/40 shadow-lg">
-                RM
+        <!-- Left Side: Branding (Red) -->
+        <div class="hidden md:flex md:w-[45%] bg-[#7A1F2B] py-16 px-10 flex-col items-center justify-center text-center text-white relative">
+            <div class="w-28 h-28 bg-white rounded-full flex items-center justify-center mb-6 shadow-lg transform hover:scale-105 transition-transform">
+                <span class="text-[#7A1F2B] font-serif font-black text-4xl tracking-tighter">RM</span>
             </div>
-            <h1 class="font-serif font-bold text-2xl text-[#7A1F2B] tracking-tight pt-1">
-                Portal Admin Raso Mandeh
+            
+            <h1 class="font-bold text-2xl tracking-tight mb-8">
+                Rumah Makan<br>Raso Mandeh
             </h1>
-            <p class="text-xs text-[#241B16]/70 max-w-xs mx-auto">
-                Masuk untuk mengelola pesanan, hidangan masakan Minang, dan operasional cabang.
+            
+            <div class="w-10 h-[2px] bg-white/40 mb-8"></div>
+            
+            <p class="text-[13px] text-white/90 font-medium mb-4">
+                Sistem Informasi Manajemen Terpadu
+            </p>
+            <p class="text-[11px] text-white/75 leading-relaxed">
+                Melayani anggota dan pelanggan<br>dengan prinsip transparansi & kekeluargaan
             </p>
         </div>
 
-        <!-- Flash Alert -->
-        @if(session('success'))
-        <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
-            {{ session('success') }}
-        </div>
-        @endif
+        <!-- Right Side: Form (White) -->
+        <div class="w-full md:w-[55%] p-10 sm:p-14 flex flex-col justify-center bg-white">
+            <div class="mb-8">
+                <h2 class="text-xl font-bold text-neutral-900 tracking-tight mb-1.5">Masuk ke Sistem</h2>
+                <p class="text-xs text-neutral-500">Silakan login menggunakan akun Anda</p>
+            </div>
 
-        @if($errors->any())
-        <div class="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold space-y-1">
-            @foreach($errors->all() as $err)
-                <p>• {{ $err }}</p>
-            @endforeach
-        </div>
-        @endif
+            <!-- Flash Alert -->
+            @if(session('success'))
+            <div class="mb-4 p-3 rounded bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
+                {{ session('success') }}
+            </div>
+            @endif
 
-        <!-- Login Form -->
-        <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-4">
-            @csrf
+            @if($errors->any())
+            <div class="mb-4 p-3 rounded bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold space-y-1">
+                @foreach($errors->all() as $err)
+                    <p>• {{ $err }}</p>
+                @endforeach
+            </div>
+            @endif
 
-            <!-- Email Field -->
-            <div>
-                <label for="email" class="block text-xs font-bold text-[#241B16]/80 mb-1.5 uppercase tracking-wider">
-                    Alamat Email Admin
-                </label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#7A1F2B]">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206"/>
-                        </svg>
+            <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-4">
+                @csrf
+                
+                <div>
+                    <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Email <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <input type="email" name="email" value="{{ old('email', 'admin@rasomandeh.com') }}" required autofocus class="w-full pl-9 pr-3 py-2 border border-neutral-300 rounded focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] outline-none text-xs transition-colors" placeholder="nama@rasomandeh.com">
                     </div>
-                    <input type="email" 
-                           name="email" 
-                           id="email" 
-                           required 
-                           autofocus
-                           value="{{ old('email', 'admin@rasomandeh.com') }}" 
-                           placeholder="admin@rasomandeh.com" 
-                           class="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-[#7A1F2B] focus:border-transparent outline-none transition-all">
                 </div>
-            </div>
 
-            <!-- Password Field -->
-            <div x-data="{ showPass: false }">
-                <label for="password" class="block text-xs font-bold text-[#241B16]/80 mb-1.5 uppercase tracking-wider">
-                    Kata Sandi (Password)
-                </label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#7A1F2B]">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                        </svg>
+                <div x-data="{ showPass: false }">
+                    <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Password <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <input :type="showPass ? 'text' : 'password'" name="password" value="password" required class="w-full pl-9 pr-9 py-2 border border-neutral-300 rounded focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] outline-none text-xs transition-colors" placeholder="Password">
+                        <button type="button" @click="showPass = !showPass" class="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-neutral-600">
+                            <svg x-show="!showPass" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            <svg x-show="showPass" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+                        </button>
                     </div>
-                    <input :type="showPass ? 'text' : 'password'" 
-                           name="password" 
-                           id="password" 
-                           required 
-                           value="password"
-                           placeholder="••••••••" 
-                           class="w-full pl-10 pr-10 py-3 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-[#7A1F2B] focus:border-transparent outline-none transition-all">
-                    <button type="button" 
-                            @click="showPass = !showPass" 
-                            class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-stone-700">
-                        <svg x-show="!showPass" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                        </svg>
-                        <svg x-show="showPass" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/>
-                        </svg>
-                    </button>
                 </div>
-            </div>
 
-            <!-- Remember Me -->
-            <div class="flex items-center justify-between text-xs">
-                <label class="flex items-center space-x-2 text-[#241B16]/80 cursor-pointer">
-                    <input type="checkbox" name="remember" class="rounded border-stone-300 text-[#7A1F2B] focus:ring-[#7A1F2B]">
-                    <span>Ingat sesi saya</span>
-                </label>
-                <span class="text-[11px] text-[#C9A227] font-semibold">Akses Terenkripsi</span>
-            </div>
+                <div class="flex items-center justify-between pt-1">
+                    <label class="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="remember" class="rounded-[2px] border-neutral-300 text-[#7A1F2B] focus:ring-[#7A1F2B] w-3 h-3">
+                        <span class="text-[11px] text-neutral-500">Ingat saya</span>
+                    </label>
+                    <a href="#" class="text-[11px] font-bold text-[#7A1F2B] hover:underline">Lupa password?</a>
+                </div>
 
-            <!-- Submit Button -->
-            <button type="submit" 
-                    class="w-full bg-[#7A1F2B] hover:bg-[#3D0F15] text-white font-bold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all transform active:scale-98 text-sm flex items-center justify-center space-x-2">
-                <span>Masuk ke Dashboard</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                </svg>
-            </button>
-        </form>
+                <button type="submit" class="w-full bg-[#7A1F2B] hover:bg-[#5a1620] text-white font-bold py-2.5 px-4 rounded transition-colors text-xs mt-2 shadow-sm">
+                    Masuk
+                </button>
+                
+                <!-- Demo login info styling matched to the screenshot's secondary button -->
+                <div class="relative py-3">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-neutral-200"></div>
+                    </div>
+                    <div class="relative flex justify-center text-[10px]">
+                        <span class="px-2 bg-white text-neutral-400">Atau</span>
+                    </div>
+                </div>
 
-        <!-- Demo Credentials Box -->
-        <div class="p-3.5 rounded-2xl bg-[#C9A227]/10 border border-[#C9A227]/30 text-xs text-[#241B16]/80 space-y-1">
-            <div class="flex items-center space-x-1.5 font-bold text-[#7A1F2B]">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                </svg>
-                <span>Akun Administrator Default:</span>
+                <!-- Green secondary button imitating the "Sign in with ID Card" -->
+                <button type="button" onclick="alert('Email: admin@rasomandeh.com | Password: password')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-bold py-2.5 px-4 rounded transition-colors text-xs shadow-sm flex items-center justify-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
+                    </svg>
+                    <span>Gunakan Demo Akun Admin</span>
+                </button>
+
+            </form>
+
+            <div class="mt-auto pt-8 text-center">
+                <p class="text-[9px] text-neutral-400 uppercase tracking-wider">
+                    &copy; {{ date('Y') }} Raso Mandeh — ERP v1.0
+                </p>
+                <a href="{{ url('/') }}" class="inline-block mt-1 text-[10px] font-medium text-neutral-400 hover:text-[#7A1F2B]">
+                    Kembali ke Halaman Publik
+                </a>
             </div>
-            <p>Email: <strong class="text-[#241B16]">admin@rasomandeh.com</strong></p>
-            <p>Password: <strong class="text-[#241B16]">password</strong></p>
         </div>
-
-        <!-- Back to Public Site -->
-        <div class="pt-2 text-center border-t border-stone-100">
-            <a href="{{ url('/') }}" class="text-xs text-[#241B16]/60 hover:text-[#7A1F2B] transition-colors inline-flex items-center space-x-1">
-                <span>&larr; Kembali ke Website Raso Mandeh</span>
-            </a>
-        </div>
-
     </div>
-
 </body>
 </html>
