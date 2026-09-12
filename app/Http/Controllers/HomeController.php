@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $branches = Branch::where('is_active', true)->get();
-        
+
         $menuItems = MenuItem::where('is_active', true)
             ->with(['branchPrices'])
             ->get()
@@ -23,6 +23,7 @@ class HomeController extends Controller
                 // Determine a display price (from first branch price or default)
                 $firstPrice = $item->branchPrices->first();
                 $item->display_price = $firstPrice ? (float) $firstPrice->harga : 25000;
+
                 return $item;
             });
 
@@ -34,10 +35,10 @@ class HomeController extends Controller
 
         $categories = [
             ['id' => 'all', 'name' => 'Semua Hidangan'],
-            ['id' => 'daging', 'name' => 'Lauk Daging'],
-            ['id' => 'ayam', 'name' => 'Lauk Ayam'],
-            ['id' => 'ikan', 'name' => 'Lauk Ikan'],
-            ['id' => 'sayur', 'name' => 'Sayur & Sambal'],
+            ['id' => 'ayam', 'name' => 'Ayam'],
+            ['id' => 'ikan', 'name' => 'Ikan'],
+            ['id' => 'daging', 'name' => 'Daging Sapi'],
+            ['id' => 'topping', 'name' => 'Topping & Bumbu'],
             ['id' => 'minuman', 'name' => 'Minuman Tradisional'],
         ];
 

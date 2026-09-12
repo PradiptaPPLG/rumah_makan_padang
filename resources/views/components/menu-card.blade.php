@@ -1,6 +1,6 @@
 @props(['item'])
 
-<div x-show="(selectedCategory === 'all' || selectedCategory === '{{ $item->kategori }}') && 
+<div x-show="((selectedCategory === 'all' && '{{ $item->kategori }}' !== 'topping') || selectedCategory === '{{ $item->kategori }}') && 
              ('{{ strtolower(addslashes($item->nama)) }}'.includes(searchQuery.toLowerCase()) || '{{ strtolower(addslashes($item->deskripsi)) }}'.includes(searchQuery.toLowerCase()))"
      x-transition:enter="transition ease-out duration-300"
      x-transition:enter-start="opacity-0 scale-95"
@@ -55,7 +55,11 @@
             <div>
                 <span class="text-[11px] text-[#241B16]/60 uppercase tracking-wider block">Harga Porsi</span>
                 <span class="text-lg font-bold text-[#7A1F2B]">
-                    Rp {{ number_format($item->display_price, 0, ',', '.') }}
+                    @if($item->display_price == 0)
+                        GRATIS 🎉
+                    @else
+                        Rp {{ number_format($item->display_price, 0, ',', '.') }}
+                    @endif
                 </span>
             </div>
 

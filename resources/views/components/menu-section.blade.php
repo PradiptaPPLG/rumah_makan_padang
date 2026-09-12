@@ -13,6 +13,7 @@
         </div>
 
         <!-- Category Filter Pills -->
+
         <div class="flex flex-wrap items-center justify-center gap-2.5 mb-8">
             @foreach($categories as $category)
             <button @click="selectedCategory = '{{ $category['id'] }}'"
@@ -56,3 +57,4 @@
 
     </div>
 </section>
+

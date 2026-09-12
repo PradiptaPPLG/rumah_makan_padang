@@ -50,5 +50,37 @@
         <p class="text-sm font-medium" x-text="notificationMessage"></p>
     </div>
 
+    <!-- Image Asset Protection -->
+    <style>
+        img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            -webkit-user-select: none;
+            user-select: none;
+            pointer-events: none;
+        }
+        /* Re-enable pointer events only for interactive elements that contain images */
+        button img, a img, [x-on\:click] img, [\\@click] img {
+            pointer-events: auto;
+        }
+    </style>
+    <script>
+        document.addEventListener('contextmenu', function (e) {
+            if (e.target.tagName === 'IMG' || e.target.closest('img')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        document.addEventListener('dragstart', function (e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+
 </body>
 </html>

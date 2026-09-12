@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Branch;
-use App\Models\MenuItem;
 use App\Models\BranchMenuPrice;
-use App\Models\Review;
+use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Review;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -87,113 +87,172 @@ class DatabaseSeeder extends Seeder
 
         // 2. Seed Menu Items
         $menuData = [
+            // === AYAM ===
             [
-                'nama' => 'Nasi Rendang Daging Sapi',
-                'kategori' => 'daging',
-                'deskripsi' => 'Rendang daging sapi khas Payakumbuh dimasak perlahan selama 8 jam dengan kelapa kental & rempah warisan 1950.',
-                'foto' => 'https://images.unsplash.com/photo-1565557628821-2b6a3f3c2d6e?w=700&auto=format&fit=crop&q=80',
-                'badge' => 'Signature',
-                'rating' => 4.9,
-                'base_price' => 35000,
-            ],
-            [
-                'nama' => 'Nasi Ayam Pop Istimewa',
+                'nama' => 'Ayam Pop Istimewa',
                 'kategori' => 'ayam',
                 'deskripsi' => 'Ayam kampung muda dimasak air kelapa, digoreng kilat mentega, disajikan dengan sambal tomat cabe merah khas Bukittinggi.',
-                'foto' => 'https://images.unsplash.com/photo-1598103452416-9554604aa204?w=700&auto=format&fit=crop&q=80',
+                'foto' => '/menu/nasi-padang-ayam-pop.webp',
                 'badge' => 'Favorit',
                 'rating' => 4.8,
-                'base_price' => 28000,
-            ],
-            [
-                'nama' => 'Dendeng Batokok Lado Mudo',
-                'kategori' => 'daging',
-                'deskripsi' => 'Daging sapi iris tipis dipipihkan lalu dipanggang arang batok dan disiram sambal lado mudo hijau harum menggiurkan.',
-                'foto' => 'https://images.unsplash.com/photo-1544025162-d76694265947?w=700&auto=format&fit=crop&q=80',
-                'badge' => 'Signature',
-                'rating' => 4.9,
-                'base_price' => 34000,
-            ],
-            [
-                'nama' => 'Gulai Kepala Ikan Kakap',
-                'kategori' => 'ikan',
-                'deskripsi' => 'Kepala kakap merah segar dengan kuah gulai rempah kuning pekat, daun ruku-ruku, dan sensasi asam belimbing wuluh.',
-                'foto' => 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=700&auto=format&fit=crop&q=80',
-                'badge' => 'Signature',
-                'rating' => 4.9,
-                'base_price' => 55000,
+                'base_price' => 32000,
             ],
             [
                 'nama' => 'Ayam Bakar Bumbu Padang',
                 'kategori' => 'ayam',
                 'deskripsi' => 'Ayam bakar dengan lumuran bumbu rempah padang yang karamelisasi wangi arang batok kelapa asli.',
-                'foto' => 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=700&auto=format&fit=crop&q=80',
+                'foto' => '/menu/nasi-padang-ayam-bakar.webp',
                 'badge' => 'Favorit',
                 'rating' => 4.8,
-                'base_price' => 29000,
+                'base_price' => 31000,
             ],
             [
-                'nama' => 'Nasi Ikan Patin Asam Padeh',
+                'nama' => 'Ayam Gulai Santan',
+                'kategori' => 'ayam',
+                'deskripsi' => 'Ayam kampung dimasak dalam kuah gulai santan kelapa murni dengan rempah kuning, serai, dan daun salam.',
+                'foto' => '/menu/nasi-padang-ayam-gulai.webp',
+                'badge' => null,
+                'rating' => 4.7,
+                'base_price' => 31000,
+            ],
+            [
+                'nama' => 'Ayam Goreng Padang',
+                'kategori' => 'ayam',
+                'deskripsi' => 'Ayam goreng bumbu rempah Padang, renyah di luar dan juicy di dalam, cocok dengan nasi putih hangat.',
+                'foto' => '/menu/nasi-padang-ayam-goreng.webp',
+                'badge' => null,
+                'rating' => 4.6,
+                'base_price' => 31000,
+            ],
+            // === IKAN ===
+            [
+                'nama' => 'Gulai Kepala Ikan Kakap',
                 'kategori' => 'ikan',
-                'deskripsi' => 'Ikan patin segar bumbu asam padeh merah pedas segar tanpa santan, sangat kaya rempah serai dan daun kunyit.',
-                'foto' => 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=700&auto=format&fit=crop&q=80',
+                'deskripsi' => 'Kepala kakap merah segar dengan kuah gulai rempah kuning pekat, daun ruku-ruku, dan sensasi asam belimbing wuluh.',
+                'foto' => '/menu/nasi-padang-gulai-kepala-kakap.webp',
+                'badge' => 'Signature',
+                'rating' => 4.9,
+                'base_price' => 85000,
+            ],
+            [
+                'nama' => 'Ikan Asam Padeh',
+                'kategori' => 'ikan',
+                'deskripsi' => 'Ikan segar bumbu asam padeh merah pedas tanpa santan, sangat kaya rempah serai dan daun kunyit.',
+                'foto' => '/menu/nasi-pasang-ikan-asam-padeh.webp',
                 'badge' => 'Baru',
                 'rating' => 4.7,
                 'base_price' => 32000,
             ],
+            // === DAGING SAPI ===
             [
-                'nama' => 'Nasi Telur Balado Barendo',
-                'kategori' => 'ayam',
-                'deskripsi' => 'Telur dadar barendo renyah berserat khas Payakumbuh dipadukan dengan telur bulat sambal balado merah legit.',
-                'foto' => 'https://images.unsplash.com/photo-1516684732072-2c9c5ad3e2fc?w=700&auto=format&fit=crop&q=80',
-                'badge' => 'Favorit',
-                'rating' => 4.7,
-                'base_price' => 22000,
+                'nama' => 'Rendang Daging Sapi',
+                'kategori' => 'daging',
+                'deskripsi' => 'Rendang daging sapi khas Payakumbuh dimasak perlahan selama 8 jam dengan kelapa kental & rempah warisan 1950.',
+                'foto' => '/menu/nasi-padang-rendang.webp',
+                'badge' => 'Signature',
+                'rating' => 4.9,
+                'base_price' => 35000,
             ],
             [
-                'nama' => 'Gulai Kapau Sayur Cubadak',
-                'kategori' => 'sayur',
-                'deskripsi' => 'Sayur nangka muda, kacang panjang, dan kol berkuah gulai santan gurih khas los lambuang Bukittinggi.',
-                'foto' => 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=700&auto=format&fit=crop&q=80',
-                'badge' => null,
-                'rating' => 4.6,
-                'base_price' => 18000,
-            ],
-            [
-                'nama' => 'Sambal Ijo & Lalapan Daun Singkong',
-                'kategori' => 'sayur',
-                'deskripsi' => 'Sambal cabe hijau ulek kasar dengan ikan teri medan goreng kering dan rebusan pucuk daun singkong empuk.',
-                'foto' => 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=700&auto=format&fit=crop&q=80',
+                'nama' => 'Dendeng Balado',
+                'kategori' => 'daging',
+                'deskripsi' => 'Daging sapi iris tipis digoreng kering lalu disiram sambal balado merah pedas manis yang menggugah selera.',
+                'foto' => '/menu/nasi-padang-dendeng-balado.webp',
                 'badge' => 'Favorit',
                 'rating' => 4.8,
+                'base_price' => 35000,
+            ],
+            [
+                'nama' => 'Dendeng Batokok Lado Mudo',
+                'kategori' => 'daging',
+                'deskripsi' => 'Daging sapi iris tipis dipipihkan lalu dipanggang arang batok dan disiram sambal lado mudo hijau harum menggiurkan.',
+                'foto' => '/menu/nasi-padang-dendeng-batokok.webp',
+                'badge' => 'Signature',
+                'rating' => 4.9,
+                'base_price' => 35000,
+            ],
+            [
+                'nama' => 'Paru Sapi Goreng',
+                'kategori' => 'daging',
+                'deskripsi' => 'Paru sapi empuk dimasak bumbu rempah Minang lalu digoreng kering, gurih dan kriuk sempurna.',
+                'foto' => '/menu/nasi-padang-paru-sapi-goreng.webp',
+                'badge' => null,
+                'rating' => 4.6,
+                'base_price' => 30000,
+            ],
+            [
+                'nama' => 'Gulai Tambusu',
+                'kategori' => 'daging',
+                'deskripsi' => 'Usus sapi diisi tahu dan telur, dimasak dalam kuah gulai santan kental rempah autentik khas Minang.',
+                'foto' => '/menu/nasi-padang-gulai-tambusu.webp',
+                'badge' => null,
+                'rating' => 4.7,
+                'base_price' => 32000,
+            ],
+            [
+                'nama' => 'Gulai Tunjang Kikil',
+                'kategori' => 'daging',
+                'deskripsi' => 'Kikil sapi dimasak lunak dalam kuah gulai santan kuning dengan rempah lengkap dan cita rasa gurih mendalam.',
+                'foto' => '/menu/nasi-padang-gulai-tunjang-kikil.webp',
+                'badge' => null,
+                'rating' => 4.6,
+                'base_price' => 35000,
+            ],
+            // === TOPPING & BUMBU ===
+            [
+                'nama' => 'Nasi Perkedel Kentang',
+                'kategori' => 'daging',
+                'deskripsi' => 'Perkedel kentang goreng renyah di luar, lembut di dalam, cocok sebagai pelengkap nasi atau lauk pilihan.',
+                'foto' => '/menu/nasi-padang-perkedel-kentang.webp',
+                'badge' => 'Favorit',
+                'rating' => 4.7,
                 'base_price' => 12000,
             ],
             [
-                'nama' => 'Es Tebak Asli Minang',
-                'kategori' => 'minuman',
-                'deskripsi' => 'Dessert es legendaris Minangkabau berisi tebak tepung beras, tape singkong ketan, cincau, sirup delima, dan santan gurih.',
-                'foto' => 'https://images.unsplash.com/photo-1556679343-c7306c1976bd?w=700&auto=format&fit=crop&q=80',
-                'badge' => 'Signature',
-                'rating' => 4.9,
-                'base_price' => 18000,
+                'nama' => 'Nasi Telur Dadar Padang',
+                'kategori' => 'ayam',
+                'deskripsi' => 'Telur dadar barendo renyah berserat khas Payakumbuh, digoreng sempurna dengan bumbu bawang dan cabe.',
+                'foto' => '/menu/nasi-padang-telur-dadar.webp',
+                'badge' => null,
+                'rating' => 4.5,
+                'base_price' => 14000,
             ],
             [
-                'nama' => 'Es Teh Talua Kocok Gula Aren',
-                'kategori' => 'minuman',
-                'deskripsi' => 'Minuman penambah stamina racikan teh hitam pekat Minang, kuning telur ayam kampung, madu lebah, dan perasan jeruk nipis.',
-                'foto' => 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=700&auto=format&fit=crop&q=80',
+                'nama' => 'Sambal Ijo & Merah',
+                'kategori' => 'topping',
+                'deskripsi' => 'Sambal cabe hijau dan merah ulek kasar khas Minang, pedas segar cocok untuk melengkapi setiap hidangan.',
+                'foto' => '/items/sambel-ijo-merah.webp',
                 'badge' => 'Favorit',
                 'rating' => 4.8,
-                'base_price' => 20000,
+                'base_price' => 5000,
             ],
             [
-                'nama' => 'Es Kelapa Muda Jeruk Kasturi',
-                'kategori' => 'minuman',
-                'deskripsi' => 'Daging dan air kelapa muda murni dipadukan dengan kesegaran asam manis perasan jeruk kasturi alami.',
-                'foto' => 'https://images.unsplash.com/photo-1525686463730-8ed935685606?w=700&auto=format&fit=crop&q=80',
+                'nama' => 'Daun Singkong Rebus',
+                'kategori' => 'topping',
+                'deskripsi' => 'Pucuk daun singkong muda direbus empuk, segar dan lezat sebagai pelengkap lauk-pauk Padang.',
+                'foto' => '/items/daun-singkong-rebus.webp',
                 'badge' => null,
-                'rating' => 4.7,
-                'base_price' => 15000,
+                'rating' => 4.5,
+                'base_price' => 5000,
+            ],
+            [
+                'nama' => 'Nangka Cubadak Gulai',
+                'kategori' => 'topping',
+                'deskripsi' => 'Nangka muda dimasak dalam kuah gulai santan gurih khas Kapau Bukittinggi, nikmat sebagai tambahan.',
+                'foto' => '/items/nangka-cubadak.webp',
+                'badge' => null,
+                'rating' => 4.6,
+                'base_price' => 8000,
+            ],
+            // === MINUMAN ===
+            [
+                'nama' => 'Teh Plastik Khas Minang',
+                'kategori' => 'topping',
+                'deskripsi' => 'Teh manis dingin legendaris ala warung Padang disajikan dalam plastik es batu, segar menemani makan.',
+                'foto' => '/items/teh-plastik.webp',
+                'badge' => 'Favorit',
+                'rating' => 4.8,
+                'base_price' => 0,
             ],
         ];
 
@@ -201,7 +260,7 @@ class DatabaseSeeder extends Seeder
         foreach ($menuData as $mData) {
             $basePrice = $mData['base_price'];
             unset($mData['base_price']);
-            
+
             $item = MenuItem::create(array_merge($mData, ['is_active' => true]));
             $createdMenuItems[] = $item;
 
@@ -273,7 +332,7 @@ class DatabaseSeeder extends Seeder
                     ['item_index' => 0, 'qty' => 2, 'price' => 37000], // Rendang
                     ['item_index' => 1, 'qty' => 1, 'price' => 30000], // Ayam Pop
                     ['item_index' => 9, 'qty' => 2, 'price' => 20000], // Es Tebak
-                ]
+                ],
             ],
             [
                 'branch_id' => $branches[0]->id,
@@ -286,7 +345,7 @@ class DatabaseSeeder extends Seeder
                     ['item_index' => 0, 'qty' => 3, 'price' => 37000], // Rendang
                     ['item_index' => 2, 'qty' => 2, 'price' => 36000], // Dendeng
                     ['item_index' => 10, 'qty' => 3, 'price' => 22000], // Es Teh Talua
-                ]
+                ],
             ],
             [
                 'branch_id' => $branches[1]->id,
@@ -299,7 +358,7 @@ class DatabaseSeeder extends Seeder
                     ['item_index' => 3, 'qty' => 1, 'price' => 55000], // Gulai Kepala Kakap
                     ['item_index' => 7, 'qty' => 2, 'price' => 18000], // Sayur Kapau
                     ['item_index' => 11, 'qty' => 2, 'price' => 15000], // Es Kelapa
-                ]
+                ],
             ],
             [
                 'branch_id' => $branches[2]->id,
@@ -313,7 +372,7 @@ class DatabaseSeeder extends Seeder
                     ['item_index' => 1, 'qty' => 5, 'price' => 28000],
                     ['item_index' => 6, 'qty' => 4, 'price' => 22000],
                     ['item_index' => 9, 'qty' => 8, 'price' => 18000],
-                ]
+                ],
             ],
             [
                 'branch_id' => $branches[5]->id,
@@ -326,7 +385,7 @@ class DatabaseSeeder extends Seeder
                     ['item_index' => 2, 'qty' => 4, 'price' => 34000],
                     ['item_index' => 4, 'qty' => 4, 'price' => 29000],
                     ['item_index' => 7, 'qty' => 4, 'price' => 18000],
-                ]
+                ],
             ],
             [
                 'branch_id' => $branches[3]->id,
@@ -338,7 +397,7 @@ class DatabaseSeeder extends Seeder
                 'items' => [
                     ['item_index' => 0, 'qty' => 2, 'price' => 35000],
                     ['item_index' => 5, 'qty' => 2, 'price' => 32000],
-                ]
+                ],
             ],
         ];
 
