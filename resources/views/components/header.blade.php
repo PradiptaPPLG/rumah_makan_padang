@@ -4,7 +4,7 @@
         <div class="flex items-center justify-between">
             <!-- Brand Logo -->
             <a href="#" class="flex items-center space-x-3 group">
-                <img src="/logo/Logo_Final.png" alt="Raso Mandeh Logo" class="w-48 md:w-64 h-auto object-contain group-hover:scale-105 transition-transform">
+                <img src="/logo/Logo_Final.png" alt="Raso Mandeh Logo" class="brand-logo group-hover:scale-105 transition-transform">
             </a>
 
             <!-- Desktop Navigation -->
