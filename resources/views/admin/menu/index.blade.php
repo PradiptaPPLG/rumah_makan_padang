@@ -170,7 +170,7 @@
                     </button>
                 </div>
 
-                <form action="{{ route('admin.menu.store') }}" method="POST" class="space-y-3 text-xs">
+                <form action="{{ route('admin.menu.store') }}" method="POST" enctype="multipart/form-data" class="space-y-3 text-xs">
                     @csrf
                     <div>
                         <label class="block font-semibold text-neutral-700 mb-1">Nama Hidangan *</label>
@@ -211,8 +211,14 @@
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-neutral-700 mb-1">URL Foto Masakan</label>
-                        <input type="url" name="foto" placeholder="https://images.unsplash.com/..." class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
+                        <label class="block font-semibold text-neutral-700 mb-1">Upload File Foto (Otomatis Konversi WebP)</label>
+                        <input type="file" name="foto_file" accept="image/webp,image/png,image/jpeg,image/jpg" class="w-full text-xs p-2 rounded-xl border border-neutral-300 bg-neutral-50 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#7A1F2B] file:text-white hover:file:bg-[#611922]">
+                        <p class="text-[10px] text-neutral-400 mt-1">Mendukung upload format .webp, .png, .jpg (otomatis diproses & disimpan sebagai .webp)</p>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-neutral-700 mb-1">Atau URL Foto Alternative</label>
+                        <input type="text" name="foto" placeholder="/menu/nasi-padang-rendang.webp" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
                     </div>
 
                     <div>
@@ -247,7 +253,7 @@
                     </button>
                 </div>
 
-                <form :action="'/admin/menu/' + editItem.id" method="POST" class="space-y-3 text-xs">
+                <form :action="'/admin/menu/' + editItem.id" method="POST" enctype="multipart/form-data" class="space-y-3 text-xs">
                     @csrf
                     @method('PUT')
                     <div>
@@ -289,8 +295,13 @@
                     </div>
 
                     <div>
-                        <label class="block font-semibold text-neutral-700 mb-1">URL Foto Masakan</label>
-                        <input type="url" name="foto" x-model="editItem.foto" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
+                        <label class="block font-semibold text-neutral-700 mb-1">Ganti Foto File (Otomatis WebP)</label>
+                        <input type="file" name="foto_file" accept="image/webp,image/png,image/jpeg,image/jpg" class="w-full text-xs p-2 rounded-xl border border-neutral-300 bg-neutral-50 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#7A1F2B] file:text-white hover:file:bg-[#611922]">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-neutral-700 mb-1">Atau Path / URL Foto</label>
+                        <input type="text" name="foto" x-model="editItem.foto" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
                     </div>
 
                     <div>

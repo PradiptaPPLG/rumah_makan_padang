@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\MenuItemController;
 use App\Http\Controllers\Api\OrderController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function () {
 
     // Menu Item routes
     Route::get('/menu-items', [MenuItemController::class, 'index']);
+    Route::post('/menu-items/upload-image', [MenuItemController::class, 'uploadImage']);
     Route::get('/menu-items/{id}', [MenuItemController::class, 'show']);
 
     // Order routes

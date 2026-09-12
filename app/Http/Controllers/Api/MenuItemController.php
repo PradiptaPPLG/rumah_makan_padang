@@ -4,11 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\MenuItem;
-use App\Models\BranchMenuPrice;
+use App\Services\WebpUploadService;
 use Illuminate\Http\Request;
 
 class MenuItemController extends Controller
 {
+    private function formatFotoUrl(?string $foto): ?string
+    {
+        if (empty($foto)) {
+            return null;
+        }
+
+        if (str_starts_with($foto, 'http://') || str_starts_with($foto, 'https://')) {
+            return $foto;
+        }
+
+        return url($foto);
+    }
+
     public function index(Request $request)
     {
         $query = MenuItem::query()->where('is_active', true);
@@ -25,18 +38,22 @@ class MenuItemController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $menuItems->map(function ($item) use ($request) {
-                    $price = $item->branch_prices->first();
+                'data' => $menuItems->map(function ($item) {
+                    $price = $item->branchPrices->first();
+                    $fotoUrl = $this->formatFotoUrl($item->foto);
+
                     return [
                         'id' => $item->id,
                         'nama' => $item->nama,
                         'kategori' => $item->kategori,
                         'deskripsi' => $item->deskripsi,
-                        'foto' => $item->foto,
+                        'foto' => $fotoUrl,
+                        'foto_path' => $item->foto,
+                        'foto_format' => str_ends_with(strtolower((string) $item->foto), '.webp') ? 'webp' : 'image',
                         'badge' => $item->badge,
                         'rating' => (float) $item->rating,
                         'harga' => $price ? (int) $price->harga : null,
-                        'harga_display' => $price ? "Rp " . number_format((int) $price->harga, 0, ',', '.') : null,
+                        'harga_display' => $price ? 'Rp '.number_format((int) $price->harga, 0, ',', '.') : null,
                     ];
                 }),
             ]);
@@ -47,12 +64,14 @@ class MenuItemController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $menuItems->map(fn($item) => [
+            'data' => $menuItems->map(fn ($item) => [
                 'id' => $item->id,
                 'nama' => $item->nama,
                 'kategori' => $item->kategori,
                 'deskripsi' => $item->deskripsi,
-                'foto' => $item->foto,
+                'foto' => $this->formatFotoUrl($item->foto),
+                'foto_path' => $item->foto,
+                'foto_format' => str_ends_with(strtolower((string) $item->foto), '.webp') ? 'webp' : 'image',
                 'badge' => $item->badge,
                 'rating' => (float) $item->rating,
             ]),
@@ -63,9 +82,32 @@ class MenuItemController extends Controller
     {
         $menuItem = MenuItem::with('branchPrices.branch')->findOrFail($id);
 
+        $data = $menuItem->toArray();
+        $data['foto_url'] = $this->formatFotoUrl($menuItem->foto);
+        $data['foto_format'] = str_ends_with(strtolower((string) $menuItem->foto), '.webp') ? 'webp' : 'image';
+
         return response()->json([
             'success' => true,
-            'data' => $menuItem,
+            'data' => $data,
+        ]);
+    }
+
+    public function uploadImage(Request $request, WebpUploadService $webpUploadService)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:webp,png,jpg,jpeg,gif,bmp,svg|max:10240',
+        ]);
+
+        $path = $webpUploadService->uploadAndConvertToWebp($request->file('image'), 'menu');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Image successfully uploaded and converted to WebP format',
+            'data' => [
+                'path' => $path,
+                'url' => url($path),
+                'format' => 'webp',
+            ],
         ]);
     }
 }
