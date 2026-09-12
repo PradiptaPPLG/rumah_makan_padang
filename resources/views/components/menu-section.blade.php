@@ -5,7 +5,7 @@
         <div class="text-center max-w-2xl mx-auto mb-12">
             <span class="text-[#7A1F2B] font-semibold text-xs uppercase tracking-widest block mb-2">Hidangan Spesial</span>
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#241B16]">
-                Menu Autentik Raso Minang
+                Menu Autentik Raso Mandeh
             </h2>
             <p class="text-sm sm:text-base text-[#241B16]/75 mt-3 leading-relaxed">
                 Dimasak segar setiap pagi dengan santan kelapa murni, cabai segar Minang, dan racikan rempah istimewa keluarga.

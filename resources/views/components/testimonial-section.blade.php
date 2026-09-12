@@ -4,7 +4,7 @@
         <div class="text-center max-w-2xl mx-auto mb-14">
             <span class="text-[#7A1F2B] font-semibold text-xs uppercase tracking-widest block mb-2">Suara Pelanggan</span>
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#241B16]">
-                Kata Mereka Tentang Raso Minang
+                Kata Mereka Tentang Raso Mandeh
             </h2>
             <p class="text-sm sm:text-base text-[#241B16]/75 mt-3">
                 Kisah kepuasan dari pecinta kuliner Minang di berbagai pelosok kota.

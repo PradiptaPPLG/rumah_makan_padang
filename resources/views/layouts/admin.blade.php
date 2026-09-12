@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin Dashboard - Raso Minang')</title>
+    <title>@yield('title', 'Admin Dashboard - Raso Mandeh')</title>
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍛</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,7 @@
                         RM
                     </div>
                     <div>
-                        <span class="font-bold text-base text-white tracking-tight block leading-tight">Raso Minang</span>
+                        <span class="font-bold text-base text-white tracking-tight block leading-tight">Raso Mandeh</span>
                         <span class="text-[10px] text-neutral-400 font-medium block">Dashboard Restoran</span>
                     </div>
                 </a>
@@ -143,7 +143,7 @@
                         </div>
                         <div class="min-w-0 flex-1">
                             <p class="text-xs font-semibold text-white truncate">{{ Auth::user()->name ?? 'Admin' }}</p>
-                            <p class="text-[10px] text-neutral-400 truncate">{{ Auth::user()->email ?? 'admin@rasominang.com' }}</p>
+                            <p class="text-[10px] text-neutral-400 truncate">{{ Auth::user()->email ?? 'admin@rasomandeh.com' }}</p>
                         </div>
                     </div>
 

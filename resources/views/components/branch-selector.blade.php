@@ -3,7 +3,7 @@
         <div class="text-center max-w-2xl mx-auto mb-10">
             <span class="text-[#7A1F2B] font-semibold text-xs uppercase tracking-widest block mb-2">Lokasi Restoran</span>
             <h2 class="text-3xl sm:text-4xl font-serif font-bold text-[#241B16]">
-                Pilih Cabang Raso Minang Terdekat
+                Pilih Cabang Raso Mandeh Terdekat
             </h2>
             <p class="text-sm sm:text-base text-[#241B16]/70 mt-2">
                 Hadir di berbagai kota besar di Indonesia. Pilih cabang Anda untuk melihat ketersediaan menu dan layanan pemesanan setempat.
@@ -45,7 +45,7 @@
                 </div>
                 <div>
                     <div class="flex items-center space-x-2">
-                        <h4 class="font-bold text-lg text-[#241B16]">Cabang Terpilih: Raso Minang - <span x-text="selectedBranch"></span></h4>
+                        <h4 class="font-bold text-lg text-[#241B16]">Cabang Terpilih: Raso Mandeh - <span x-text="selectedBranch"></span></h4>
                         <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">Buka Hari Ini</span>
                     </div>
                     <p class="text-sm text-[#241B16]/75 mt-0.5">

@@ -105,7 +105,7 @@ document.addEventListener('alpine:init', () => {
         checkoutWhatsApp() {
             if (this.cart.length === 0) return;
             
-            let message = `*HALO RASO MINANG (${this.selectedBranch.toUpperCase()})*\n`;
+            let message = `*HALO RASO MANDEH (${this.selectedBranch.toUpperCase()})*\n`;
             message += `Saya ingin memesan hidangan berikut:\n\n`;
             
             this.cart.forEach((item, i) => {

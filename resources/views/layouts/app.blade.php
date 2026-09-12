@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Raso Minang - Warisan Kuliner Minangkabau Sejak 1950')</title>
-    <meta name="description" content="Rumah Makan Padang Raso Minang - Nikmati cita rasa masakan Minang autentik resep turun-temurun sejak 1950. Rendang Payakumbuh 8 jam, Ayam Pop, Gulai Kakap, dan Es Tebak.">
+    <title>@yield('title', 'Raso Mandeh - Warisan Kuliner Minangkabau Sejak 1950')</title>
+    <meta name="description" content="Rumah Makan Padang Raso Mandeh - Nikmati cita rasa masakan Minang autentik resep turun-temurun sejak 1950. Rendang Payakumbuh 8 jam, Ayam Pop, Gulai Kakap, dan Es Tebak.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍛</text></svg>">

@@ -71,7 +71,7 @@
                     <!-- Main Dish Image -->
                     <div class="relative z-10 overflow-hidden rounded-3xl shadow-2xl border-4 border-white/60">
                         <img src="/main-foto.webp" 
-                             alt="Nasi Padang Komplit Raso Minang" 
+                             alt="Nasi Padang Komplit Raso Mandeh" 
                              class="w-full h-[420px] object-cover hover:scale-105 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4 text-white">

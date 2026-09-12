@@ -8,7 +8,7 @@
                     <div class="w-10 h-10 rounded-full bg-[#7A1F2B] flex items-center justify-center text-[#C9A227] font-serif font-bold text-xl border border-[#C9A227]/40 shadow">
                         RM
                     </div>
-                    <span class="text-2xl font-serif font-bold text-white tracking-wide">Raso Minang</span>
+                    <span class="text-2xl font-serif font-bold text-white tracking-wide">Raso Mandeh</span>
                 </div>
                 <p class="text-sm text-white/70 leading-relaxed max-w-sm">
                     Menyajikan keaslian masakan Minangkabau dengan resep turun-temurun sejak tahun 1950. Cita rasa otentik yang terjaga kehalalan, kebersihan, dan kenikmatannya di setiap suapan.
@@ -58,7 +58,7 @@
 
         <!-- Bottom Copyright & Minang Gonjong Badge -->
         <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-white/50 space-y-4 sm:space-y-0">
-            <p>&copy; {{ date('Y') }} Rumah Makan Padang Raso Minang. Seluruh Hak Cipta Dilindungi.</p>
+            <p>&copy; {{ date('Y') }} Rumah Makan Padang Raso Mandeh. Seluruh Hak Cipta Dilindungi.</p>
             <div class="flex items-center space-x-4">
                 <span>Tradisi Minangkabau Asli</span>
                 <span>•</span>

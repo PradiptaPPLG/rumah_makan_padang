@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Menu Masakan - Admin Raso Minang')
+@section('title', 'Menu Masakan - Admin Raso Mandeh')
 @section('header_title', 'Kelola Menu Masakan')
 
 @section('content')

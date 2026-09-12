@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Cabang Restoran - Admin Raso Minang')
+@section('title', 'Cabang Restoran - Admin Raso Mandeh')
 @section('header_title', 'Kelola Cabang Restoran')
 
 @section('content')
@@ -118,7 +118,7 @@
                     @csrf
                     <div>
                         <label class="block font-semibold text-neutral-700 mb-1">Nama Cabang *</label>
-                        <input type="text" name="nama" required placeholder="Raso Minang - Yogyakarta" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
+                        <input type="text" name="nama" required placeholder="Raso Mandeh - Yogyakarta" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">

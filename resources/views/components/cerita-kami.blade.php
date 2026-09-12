@@ -14,7 +14,7 @@
 
                 <p class="text-base sm:text-lg text-[#241B16]/80 leading-relaxed">
                     Berawal dari sebuah kedai kayu sederhana di kawasan Jam Gadang Bukittinggi pada tahun 1950, 
-                    <strong>Raso Minang</strong> didirikan oleh Hj. Rosma Yunus dengan tekad melestarikan cita rasa masakan Minang murni tanpa kompromi.
+                    <strong>Raso Mandeh</strong> didirikan oleh Hj. Rosma Yunus dengan tekad melestarikan cita rasa masakan Minang murni tanpa kompromi.
                 </p>
 
                 <p class="text-sm sm:text-base text-[#241B16]/70 leading-relaxed">
@@ -59,8 +59,8 @@
             <div class="lg:col-span-5 relative">
                 <div class="relative mx-auto max-w-md">
                     <div class="absolute -inset-3 bg-gradient-to-tr from-[#7A1F2B]/20 to-[#C9A227]/20 rounded-3xl blur-xl"></div>
-                    <img src="/dapur-raso-minang.webp" 
-                         alt="Dapur Tradisional Raso Minang" 
+                    <img src="/dapur-raso-mandeh.webp" 
+                         alt="Dapur Tradisional Raso Mandeh" 
                          class="relative z-10 w-full h-[400px] object-cover rounded-3xl shadow-xl border-4 border-white">
                     
                     <div class="absolute -bottom-6 -left-6 z-20 bg-white p-5 rounded-2xl shadow-xl border border-[#C9A227]/30 max-w-[240px]">

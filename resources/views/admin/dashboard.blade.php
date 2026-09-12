@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard - Admin Raso Minang')
+@section('title', 'Dashboard - Admin Raso Mandeh')
 @section('header_title', 'Ringkasan Restoran')
 
 @section('content')

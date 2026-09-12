@@ -1,4 +1,4 @@
-# 🚀 Quick Start Guide - Raso Minang
+# 🚀 Quick Start Guide - Raso Mandeh
 
 Langkah cepat untuk menjalankan project secara lokal.
 

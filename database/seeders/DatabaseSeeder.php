@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
     {
         // 0. Seed Default Admin User
         User::updateOrCreate(
-            ['email' => 'admin@rasominang.com'],
+            ['email' => 'admin@rasomandeh.com'],
             [
-                'name' => 'Administrator Raso Minang',
+                'name' => 'Administrator Raso Mandeh',
                 'password' => Hash::make('password'),
             ]
         );
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         // 1. Seed Branches
         $branchesData = [
             [
-                'nama' => 'Raso Minang - Jakarta Selatan',
+                'nama' => 'Raso Mandeh - Jakarta Selatan',
                 'kota' => 'Jakarta Selatan',
                 'alamat' => 'Jl. Senopati No. 45, Kebayoran Baru, Jakarta Selatan',
                 'jam_buka' => '09:00 - 22:00',
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Raso Minang - Bandung',
+                'nama' => 'Raso Mandeh - Bandung',
                 'kota' => 'Bandung',
                 'alamat' => 'Jl. R.E. Martadinata (Riau) No. 112, Bandung',
                 'jam_buka' => '09:00 - 22:00',
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Raso Minang - Surabaya',
+                'nama' => 'Raso Mandeh - Surabaya',
                 'kota' => 'Surabaya',
                 'alamat' => 'Jl. Manyar Kertoarjo No. 78, Gubeng, Surabaya',
                 'jam_buka' => '09:00 - 22:00',
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Raso Minang - Medan',
+                'nama' => 'Raso Mandeh - Medan',
                 'kota' => 'Medan',
                 'alamat' => 'Jl. S. Parman No. 21, Petisah Tengah, Medan',
                 'jam_buka' => '09:00 - 22:00',
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Raso Minang - Palembang',
+                'nama' => 'Raso Mandeh - Palembang',
                 'kota' => 'Palembang',
                 'alamat' => 'Jl. Jend. Sudirman No. 15, Ilir Timur I, Palembang',
                 'jam_buka' => '09:00 - 22:00',
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'nama' => 'Raso Minang - Bukittinggi',
+                'nama' => 'Raso Mandeh - Bukittinggi',
                 'kota' => 'Bukittinggi',
                 'alamat' => 'Jl. Ahmad Yani No. 8, Pasar Atas, Bukittinggi',
                 'jam_buka' => '08:00 - 22:00',

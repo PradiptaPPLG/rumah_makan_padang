@@ -1,6 +1,6 @@
-# 🍛 Rumah Makan Padang "Raso Minang"
+# 🍛 Rumah Makan Padang "Raso Mandeh"
 
-Aplikasi web full-stack monolitik **Laravel 11** untuk Rumah Makan Padang "Raso Minang", menggunakan template engine **Blade**, **Tailwind CSS**, dan **Alpine.js**.
+Aplikasi web full-stack monolitik **Laravel 11** untuk Rumah Makan Padang "Raso Mandeh", menggunakan template engine **Blade**, **Tailwind CSS**, dan **Alpine.js**.
 
 Semua kode backend, database, dan frontend terintegrasi dalam satu direktori project utama tanpa pemisahan folder `backend` dan `frontend`.
 

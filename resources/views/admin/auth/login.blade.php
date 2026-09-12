@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login Khusus Admin - Raso Minang</title>
+    <title>Login Khusus Admin - Raso Mandeh</title>
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍛</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
                 RM
             </div>
             <h1 class="font-serif font-bold text-2xl text-[#7A1F2B] tracking-tight pt-1">
-                Portal Admin Raso Minang
+                Portal Admin Raso Mandeh
             </h1>
             <p class="text-xs text-[#241B16]/70 max-w-xs mx-auto">
                 Masuk untuk mengelola pesanan, hidangan masakan Minang, dan operasional cabang.
@@ -69,8 +69,8 @@
                            id="email" 
                            required 
                            autofocus
-                           value="{{ old('email', 'admin@rasominang.com') }}" 
-                           placeholder="admin@rasominang.com" 
+                           value="{{ old('email', 'admin@rasomandeh.com') }}" 
+                           placeholder="admin@rasomandeh.com" 
                            class="w-full pl-10 pr-4 py-3 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-[#7A1F2B] focus:border-transparent outline-none transition-all">
                 </div>
             </div>
@@ -134,14 +134,14 @@
                 </svg>
                 <span>Akun Administrator Default:</span>
             </div>
-            <p>Email: <strong class="text-[#241B16]">admin@rasominang.com</strong></p>
+            <p>Email: <strong class="text-[#241B16]">admin@rasomandeh.com</strong></p>
             <p>Password: <strong class="text-[#241B16]">password</strong></p>
         </div>
 
         <!-- Back to Public Site -->
         <div class="pt-2 text-center border-t border-stone-100">
             <a href="{{ url('/') }}" class="text-xs text-[#241B16]/60 hover:text-[#7A1F2B] transition-colors inline-flex items-center space-x-1">
-                <span>&larr; Kembali ke Website Raso Minang</span>
+                <span>&larr; Kembali ke Website Raso Mandeh</span>
             </a>
         </div>
 

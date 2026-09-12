@@ -9,7 +9,7 @@
                 </div>
                 <div>
                     <span class="text-2xl lg:text-3xl font-serif font-bold text-[#7A1F2B] tracking-tight block leading-none">
-                        Raso Minang
+                        Raso Mandeh
                     </span>
                     <span class="text-[10px] tracking-[0.2em] uppercase text-[#C9A227] font-semibold block mt-0.5">
                         Authentic Padang Cuisine
