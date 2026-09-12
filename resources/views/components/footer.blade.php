@@ -4,11 +4,8 @@
             
             <!-- Brand Column -->
             <div class="lg:col-span-4 space-y-4">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full bg-[#7A1F2B] flex items-center justify-center text-[#C9A227] font-serif font-bold text-xl border border-[#C9A227]/40 shadow">
-                        RM
-                    </div>
-                    <span class="text-2xl font-serif font-bold text-white tracking-wide">Raso Mandeh</span>
+                <div class="flex items-center space-x-3 bg-white/5 p-2 rounded-xl w-fit">
+                    <img src="/logo/Logo_Final.png" alt="Raso Mandeh Logo" class="h-10">
                 </div>
                 <p class="text-sm text-white/70 leading-relaxed max-w-sm">
                     Menyajikan keaslian masakan Minangkabau dengan resep turun-temurun sejak tahun 1950. Cita rasa otentik yang terjaga kehalalan, kebersihan, dan kenikmatannya di setiap suapan.

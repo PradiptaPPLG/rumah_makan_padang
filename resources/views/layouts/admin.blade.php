@@ -36,14 +36,8 @@
             
             <!-- Brand Header -->
             <div class="h-16 px-6 border-b border-neutral-800/80 flex items-center justify-between">
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3 group">
-                    <div class="w-8 h-8 rounded-lg bg-[#7A1F2B] flex items-center justify-center text-[#C9A227] font-bold text-sm tracking-wider shadow-xs border border-[#C9A227]/30">
-                        RM
-                    </div>
-                    <div>
-                        <span class="font-bold text-base text-white tracking-tight block leading-tight">Raso Mandeh</span>
-                        <span class="text-[10px] text-neutral-400 font-medium block">Dashboard Restoran</span>
-                    </div>
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3 group bg-white/5 p-1.5 rounded-xl w-full">
+                    <img src="/logo/Logo_Final.png" alt="Raso Mandeh Logo" class="h-8">
                 </a>
                 <button @click="sidebarOpen = false" class="lg:hidden text-neutral-400 hover:text-white p-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

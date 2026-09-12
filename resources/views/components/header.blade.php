@@ -4,17 +4,7 @@
         <div class="flex items-center justify-between">
             <!-- Brand Logo -->
             <a href="#" class="flex items-center space-x-3 group">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-[#7A1F2B] to-[#3D0F15] flex items-center justify-center text-[#C9A227] shadow-md border border-[#C9A227]/40 group-hover:scale-105 transition-transform">
-                    <span class="font-serif font-bold text-xl">RM</span>
-                </div>
-                <div>
-                    <span class="text-2xl lg:text-3xl font-serif font-bold text-[#7A1F2B] tracking-tight block leading-none">
-                        Raso Mandeh
-                    </span>
-                    <span class="text-[10px] tracking-[0.2em] uppercase text-[#C9A227] font-semibold block mt-0.5">
-                        Authentic Padang Cuisine
-                    </span>
-                </div>
+                <img src="/logo/Logo_Final.png" alt="Raso Mandeh Logo" class="h-12 group-hover:scale-105 transition-transform">
             </a>
 
             <!-- Desktop Navigation -->
