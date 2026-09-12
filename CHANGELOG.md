@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Migrasi `add_role_and_phone_to_users_table`: tambah kolom `role` (admin/cashier/customer/warehouse_staff/kitchen), `phone`, dan `is_active` ke tabel `users` — menyatukan aktor ERD (ADMINS, CASHIERS) ke satu tabel sesuai arsitektur Laravel RBAC.
+- Migrasi `add_order_fields_to_orders_table`: tambah kolom `order_number` (nomor unik per transaksi), `order_type` (dine_in/takeaway), `table_number`, `qr_code_token` (untuk QR Order pelanggan), `source` (pos/customer_web/qr_scan), `payment_status`, dan `cashier_id` FK ke tabel `orders`.
+- Migrasi `create_payments_table`: tabel baru `payments` dengan dukungan metode `cash` dan `qris`, kolom `cash_given`/`change_amount` untuk kembalian tunai, `reference_number` untuk kode QRIS, dan `status` pembayaran.
+- Migrasi `create_packages_table`: tabel `packages` dan `package_items` untuk fitur Paket Menu sesuai BRD (MENU-05) dan ERD.
+- Migrasi `create_shifts_table`: tabel `shifts` untuk manajemen shift kasir sesuai BRD (POS-12), termasuk saldo awal dan penutupan.
+- Model `Payment` dengan relasi ke `Order` dan `User` (cashier) serta helper methods `isCompleted()` dan `isCash()`.
+- Model `Package` dengan relasi `belongsToMany` ke `MenuItem` melalui `package_items`.
+- Model `PackageItem` sebagai pivot model antara `Package` dan `MenuItem`.
+- Model `Shift` dengan relasi ke `User` (cashier) dan `Branch`, scope `open()`.
 - Setup awal Laravel Boost dan panduan AI Agent (`.agents/`, `boost.json`, `AGENTS.md`).
 - Instalasi dependensi npm dan build Vite.
 - Pengaturan environment database awal.
