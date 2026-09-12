@@ -37,7 +37,7 @@
             <!-- Brand Header -->
             <div class="h-16 px-6 border-b border-neutral-800/80 flex items-center justify-between">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3 group w-full">
-                    <img src="/logo/Logo_Final.png" alt="Raso Mandeh Logo" class="h-12 object-contain">
+                    <img src="/logo/Logo_Final.png" alt="Raso Mandeh Logo" class="w-48 h-auto object-contain">
                 </a>
                 <button @click="sidebarOpen = false" class="lg:hidden text-neutral-400 hover:text-white p-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
