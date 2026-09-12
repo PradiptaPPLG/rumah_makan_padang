@@ -206,7 +206,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/ayam-pop.webp',
                 'badge' => null,
                 'rating' => 4.8,
-                'base_price' => 20000,
+                'base_price' => 16000,
             ],
             [
                 'nama' => 'Tambahan Ayam Bakar',
@@ -215,7 +215,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/ayam-bakar.webp',
                 'badge' => null,
                 'rating' => 4.8,
-                'base_price' => 19000,
+                'base_price' => 15000,
             ],
             [
                 'nama' => 'Tambahan Ayam Gulai',
@@ -224,7 +224,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/ayam-gulai.webp',
                 'badge' => null,
                 'rating' => 4.7,
-                'base_price' => 19000,
+                'base_price' => 15000,
             ],
             [
                 'nama' => 'Tambahan Ayam Goreng',
@@ -233,7 +233,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/ayam-goreng.webp',
                 'badge' => null,
                 'rating' => 4.6,
-                'base_price' => 19000,
+                'base_price' => 15000,
             ],
             [
                 'nama' => 'Tambahan Rendang',
@@ -242,7 +242,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/rendang.webp',
                 'badge' => 'Favorit',
                 'rating' => 4.9,
-                'base_price' => 22000,
+                'base_price' => 17000,
             ],
             [
                 'nama' => 'Tambahan Dendeng Balado',
@@ -251,7 +251,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/dendeng-balado.webp',
                 'badge' => null,
                 'rating' => 4.8,
-                'base_price' => 22000,
+                'base_price' => 17000,
             ],
             [
                 'nama' => 'Tambahan Dendeng Batokok',
@@ -260,7 +260,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/dendeng-batokok.webp',
                 'badge' => null,
                 'rating' => 4.9,
-                'base_price' => 22000,
+                'base_price' => 17000,
             ],
             [
                 'nama' => 'Tambahan Gulai Kepala Kakap',
@@ -269,7 +269,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/kepala-ikan-kakap.webp',
                 'badge' => 'Signature',
                 'rating' => 4.9,
-                'base_price' => 75000,
+                'base_price' => 45000,
             ],
             [
                 'nama' => 'Tambahan Ikan Asam Padeh',
@@ -278,7 +278,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/ikan-asam-padeh.webp',
                 'badge' => null,
                 'rating' => 4.7,
-                'base_price' => 20000,
+                'base_price' => 15000,
             ],
             [
                 'nama' => 'Tambahan Gulai Tunjang/Kikil',
@@ -287,7 +287,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/gulai-tunjang-kikil.webp',
                 'badge' => null,
                 'rating' => 4.6,
-                'base_price' => 22000,
+                'base_price' => 17000,
             ],
             [
                 'nama' => 'Tambahan Gulai Tambusu',
@@ -296,7 +296,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/gulai-tambusu.webp',
                 'badge' => null,
                 'rating' => 4.7,
-                'base_price' => 20000,
+                'base_price' => 16000,
             ],
             [
                 'nama' => 'Tambahan Paru Sapi Goreng',
@@ -305,7 +305,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/paru-sapi.webp',
                 'badge' => null,
                 'rating' => 4.6,
-                'base_price' => 18000,
+                'base_price' => 14000,
             ],
             [
                 'nama' => 'Perkedel Kentang',
@@ -314,7 +314,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/perkedel.webp',
                 'badge' => 'Favorit',
                 'rating' => 4.7,
-                'base_price' => 5000,
+                'base_price' => 4000,
             ],
             [
                 'nama' => 'Telur Dadar Padang',
@@ -323,7 +323,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/telur-dadar.webp',
                 'badge' => null,
                 'rating' => 4.5,
-                'base_price' => 7000,
+                'base_price' => 6000,
             ],
             [
                 'nama' => 'Sambal Ijo & Merah',
@@ -332,7 +332,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/sambel-ijo-merah.webp',
                 'badge' => 'Favorit',
                 'rating' => 4.8,
-                'base_price' => 5000,
+                'base_price' => 3000,
             ],
             [
                 'nama' => 'Daun Singkong Rebus',
@@ -341,7 +341,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/daun-singkong-rebus.webp',
                 'badge' => null,
                 'rating' => 4.5,
-                'base_price' => 4000,
+                'base_price' => 3000,
             ],
             [
                 'nama' => 'Nangka Cubadak Gulai',
@@ -350,7 +350,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/nangka-cubadak.webp',
                 'badge' => null,
                 'rating' => 4.6,
-                'base_price' => 5000,
+                'base_price' => 3000,
             ],
             [
                 'nama' => 'Teh Plastik Khas Minang',
@@ -359,7 +359,7 @@ class DatabaseSeeder extends Seeder
                 'foto' => '/items/teh-plastik.webp',
                 'badge' => null,
                 'rating' => 4.8,
-                'base_price' => 0,
+                'base_price' => 2000,
             ],
         ];
 
