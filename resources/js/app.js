@@ -11,6 +11,10 @@ document.addEventListener('alpine:init', () => {
         isCartOpen: false,
         isMobileMenuOpen: false,
         isScrolled: false,
+        isNavbarHidden: false,
+        orderType: 'dine-in', // 'dine-in' or 'takeaway'
+        tableNumber: '',
+        orderNotes: '',
         cart: [],
         notificationMessage: '',
         showNotification: false,
@@ -26,9 +30,20 @@ document.addEventListener('alpine:init', () => {
                 console.warn('Could not read cart from localStorage', e);
             }
 
+            let lastScrollY = window.scrollY;
             window.addEventListener('scroll', () => {
-                this.isScrolled = window.scrollY > 20;
-            });
+                const currentScrollY = window.scrollY;
+                this.isScrolled = currentScrollY > 20;
+
+                // Hide navbar when scrolling down, show when scrolling up
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    this.isNavbarHidden = true;
+                } else {
+                    this.isNavbarHidden = false;
+                }
+                
+                lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY; // For Mobile or negative scrolling
+            }, { passive: true });
         },
 
         saveCart() {
@@ -75,6 +90,9 @@ document.addEventListener('alpine:init', () => {
 
         clearCart() {
             this.cart = [];
+            this.orderType = 'dine-in';
+            this.tableNumber = '';
+            this.orderNotes = '';
             this.saveCart();
         },
 
@@ -112,6 +130,14 @@ document.addEventListener('alpine:init', () => {
                 message += `${i + 1}. *${item.nama}* x${item.quantity} = ${this.formatRupiah(item.harga * item.quantity)}\n`;
             });
             
+            message += `\n*Tipe Pesanan:* ${this.orderType === 'dine-in' ? 'Makan di Tempat (Dine-in)' : 'Bungkus (Takeaway)'}\n`;
+            if (this.orderType === 'dine-in' && this.tableNumber.trim() !== '') {
+                message += `*Nomor Meja:* ${this.tableNumber}\n`;
+            }
+            if (this.orderNotes.trim() !== '') {
+                message += `*Catatan:* ${this.orderNotes}\n`;
+            }
+
             message += `\n*Total Tagihan:* ${this.formatRupiah(this.cartTotal)}\n`;
             message += `*Cabang Pemesanan:* ${this.selectedBranch}\n`;
             message += `Mohon konfirmasi pesanan dan ketersediaan menu. Terima kasih!`;

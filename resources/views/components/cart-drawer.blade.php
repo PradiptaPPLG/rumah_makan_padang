@@ -110,6 +110,29 @@
 
             <!-- Drawer Footer / Checkout -->
             <div x-show="cart.length > 0" class="p-6 bg-[#F5EFE2] border-t border-[#C9A227]/30 space-y-4">
+                
+                <!-- Order Options -->
+                <div class="space-y-3 pb-3 border-b border-[#C9A227]/20">
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" x-model="orderType" value="dine-in" class="form-radio text-[#7A1F2B] focus:ring-[#7A1F2B]">
+                            <span class="text-sm text-[#241B16] font-medium">Makan di Tempat</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="radio" x-model="orderType" value="takeaway" class="form-radio text-[#7A1F2B] focus:ring-[#7A1F2B]">
+                            <span class="text-sm text-[#241B16] font-medium">Bungkus</span>
+                        </label>
+                    </div>
+                    
+                    <div x-show="orderType === 'dine-in'" x-collapse>
+                        <input type="text" x-model="tableNumber" placeholder="Nomor Meja (opsional)" class="w-full text-sm rounded-lg border-[#C9A227]/30 bg-white/60 focus:bg-white focus:border-[#C9A227] focus:ring focus:ring-[#C9A227]/20 transition-colors">
+                    </div>
+                    
+                    <div>
+                        <textarea x-model="orderNotes" rows="2" placeholder="Catatan pesanan (mis: Gulai dipisah, sambal banyakan...)" class="w-full text-sm rounded-lg border-[#C9A227]/30 bg-white/60 focus:bg-white focus:border-[#C9A227] focus:ring focus:ring-[#C9A227]/20 transition-colors resize-none"></textarea>
+                    </div>
+                </div>
+
                 <div class="flex items-center justify-between text-sm text-[#241B16]/80">
                     <span>Jumlah Menu:</span>
                     <span class="font-bold" x-text="cartCount + ' Porsi'"></span>
