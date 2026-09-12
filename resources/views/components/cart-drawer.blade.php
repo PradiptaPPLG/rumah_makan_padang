@@ -125,11 +125,11 @@
                     </div>
                     
                     <div x-show="orderType === 'dine-in'" x-collapse>
-                        <input type="text" x-model="tableNumber" placeholder="Nomor Meja (opsional)" class="w-full text-sm rounded-lg border-[#C9A227]/30 bg-white/60 focus:bg-white focus:border-[#C9A227] focus:ring focus:ring-[#C9A227]/20 transition-colors">
+                        <input type="text" x-model="tableNumber" placeholder="Nomor Meja (opsional)" class="w-full text-sm px-3 py-2 rounded-lg border border-[#C9A227]/30 bg-white/60 focus:bg-white focus:border-[#C9A227] focus:ring focus:ring-[#C9A227]/20 transition-colors">
                     </div>
                     
                     <div>
-                        <textarea x-model="orderNotes" rows="2" placeholder="Catatan pesanan (mis: Gulai dipisah, sambal banyakan...)" class="w-full text-sm rounded-lg border-[#C9A227]/30 bg-white/60 focus:bg-white focus:border-[#C9A227] focus:ring focus:ring-[#C9A227]/20 transition-colors resize-none"></textarea>
+                        <textarea x-model="orderNotes" rows="2" placeholder="Catatan pesanan (mis: Gulai dipisah, sambal banyakan...)" class="w-full text-sm px-3 py-2 rounded-lg border border-[#C9A227]/30 bg-white/60 focus:bg-white focus:border-[#C9A227] focus:ring focus:ring-[#C9A227]/20 transition-colors resize-none"></textarea>
                     </div>
                 </div>
 
