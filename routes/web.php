@@ -78,6 +78,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('/menu/{id}/toggle', [MenuController::class, 'toggleActive'])->name('menu.toggleActive');
     Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
 
+    // System Logs
+    Route::get('/logs', [\App\Http\Controllers\SystemLogController::class, 'index'])->name('logs.index');
+
     // Branches Management
     Route::get('/branches', [BranchController::class, 'index'])->name('branches.index');
     Route::post('/branches', [BranchController::class, 'store'])->name('branches.store');

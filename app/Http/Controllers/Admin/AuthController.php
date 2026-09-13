@@ -53,9 +53,17 @@ class AuthController extends Controller
 
             // Normal login if no 2FA
             Auth::login($user, $remember);
-            $request->session()->regenerate();
             $this->clearRateLimit($request);
-            return redirect()->intended(route('admin.dashboard'))->with('success', 'Selamat datang kembali, ' . Auth::user()->name . '!');
+            $request->session()->regenerate();
+            
+            \App\Models\SystemLog::create([
+                'user_id' => $user->id,
+                'action' => 'Login',
+                'description' => 'Berhasil masuk melalui form login (Password).',
+                'ip_address' => $request->ip()
+            ]);
+
+            return redirect()->intended(route('admin.dashboard'))->with('success', 'Selamat datang kembali, ' . $user->name . '!');
         }
 
         $this->hitRateLimit($request);
@@ -131,11 +139,16 @@ class AuthController extends Controller
         $valid = $google2fa->verifyKey($user->two_factor_secret, $request->code);
 
         if ($valid) {
-            $remember = $request->session()->pull('2fa_remember', false);
-            $request->session()->forget('2fa_user_id');
-
-            Auth::login($user, $remember);
+            Auth::login($user, $request->session()->get('2fa_remember', false));
+            $request->session()->forget(['2fa_user_id', '2fa_remember']);
             $request->session()->regenerate();
+            
+            \App\Models\SystemLog::create([
+                'user_id' => $user->id,
+                'action' => 'Login',
+                'description' => 'Berhasil masuk melalui verifikasi Dua Langkah (2FA OTP).',
+                'ip_address' => $request->ip()
+            ]);
 
             return redirect()->intended(route('admin.dashboard'))->with('success', 'Verifikasi berhasil. Selamat datang kembali, ' . Auth::user()->name . '!');
         }

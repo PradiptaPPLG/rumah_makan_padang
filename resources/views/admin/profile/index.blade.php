@@ -12,18 +12,20 @@
         <div class="md:col-span-5 lg:col-span-4 flex flex-col items-center space-y-4">
             
             <!-- ID Card Element -->
-            <div id="id-card-element" class="w-full max-w-[280px] bg-white rounded-3xl shadow-lg relative overflow-hidden flex flex-col border border-neutral-100">
+            <div id="id-card-element" class="w-full max-w-[320px] bg-white rounded-3xl shadow-xl relative flex flex-col border border-neutral-100 pb-8">
                 <!-- Notch/Slot for lanyard -->
-                <div class="absolute top-3 left-1/2 transform -translate-x-1/2 w-16 h-3 bg-white/30 rounded-full border border-white/50 shadow-inner z-20 backdrop-blur-sm"></div>
+                <div class="absolute top-4 left-1/2 transform -translate-x-1/2 w-16 h-3 bg-white/40 rounded-full border border-white/60 shadow-inner z-20 backdrop-blur-sm"></div>
 
                 <!-- Top Header Gradient -->
-                <div class="h-32 bg-gradient-to-br from-[#7A1F2B] to-[#9A2A38] relative flex flex-col items-center justify-center pt-4">
+                <div class="h-36 bg-gradient-to-br from-[#7A1F2B] to-[#9A2A38] relative rounded-t-3xl overflow-hidden flex flex-col items-center justify-center">
+                    <!-- Subtle curves -->
+                    <div class="absolute -bottom-6 left-0 right-0 h-12 bg-white" style="border-top-left-radius: 50% 100%; border-top-right-radius: 50% 100%;"></div>
                     <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/batik-stripes.png')] mix-blend-overlay"></div>
                 </div>
 
-                <!-- Profile Picture placeholder -->
-                <div class="flex justify-center -mt-12 relative z-20">
-                    <div class="w-24 h-24 rounded-full bg-white p-1 shadow-md">
+                <!-- Profile Picture -->
+                <div class="flex justify-center -mt-16 relative z-20">
+                    <div class="w-[100px] h-[100px] rounded-full bg-white p-1 shadow-md">
                         <div class="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-full flex items-center justify-center overflow-hidden relative border-4 border-white shadow-inner">
                             <span class="text-4xl font-serif font-bold text-neutral-500 absolute">{{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}</span>
                         </div>
@@ -32,55 +34,62 @@
 
                 <!-- Body Text -->
                 <div class="pt-4 px-6 text-center">
-                    <h1 class="font-bold text-lg text-neutral-900 leading-tight mb-1 uppercase">{{ Auth::user()->name }}</h1>
-                    <p class="text-[11px] font-semibold text-[#C9A227] mb-4">{{ Auth::user()->role ?? 'Administrator' }}</p>
-                    <div class="w-16 h-px bg-neutral-200 mx-auto mb-4"></div>
+                    <h1 class="font-black text-xl text-neutral-900 leading-tight mb-1 uppercase tracking-tight">{{ Auth::user()->name }}</h1>
+                    <p class="text-xs font-bold text-[#C9A227] mb-4 italic font-serif">{{ Auth::user()->role ?? 'Administrator' }}</p>
+                    <div class="w-20 h-[1px] bg-neutral-200 mx-auto mb-5"></div>
                 </div>
 
                 <!-- Details Grid -->
-                <div class="px-6 pb-6 text-left space-y-3">
-                    <div class="grid grid-cols-3 gap-2 items-center">
-                        <span class="text-[10px] font-bold text-neutral-800 tracking-wider">EMAIL</span>
-                        <span class="col-span-2 text-xs font-medium text-neutral-600 truncate">: {{ Auth::user()->email }}</span>
+                <div class="px-8 pb-6 text-left space-y-3">
+                    <div class="grid grid-cols-12 gap-2 items-start">
+                        <span class="col-span-4 text-[10px] font-bold text-neutral-800 tracking-wider uppercase mt-0.5">Email</span>
+                        <span class="col-span-8 text-[11px] font-semibold text-neutral-600 break-words">: {{ Auth::user()->email }}</span>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 items-center">
-                        <span class="text-[10px] font-bold text-neutral-800 tracking-wider">STATUS</span>
-                        <span class="col-span-2 text-xs font-bold text-emerald-600 flex items-center gap-1">
+                    <div class="grid grid-cols-12 gap-2 items-center">
+                        <span class="col-span-4 text-[10px] font-bold text-neutral-800 tracking-wider uppercase">Status</span>
+                        <span class="col-span-8 text-[11px] font-bold text-emerald-600 flex items-center gap-1.5">
                             <span>:</span> 
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                             Aktif
                         </span>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 items-center">
-                        <span class="text-[10px] font-bold text-neutral-800 tracking-wider">ROLE</span>
-                        <span class="col-span-2 text-xs font-medium text-neutral-600 capitalize">: {{ Auth::user()->role ?? 'Admin' }}</span>
+                    <div class="grid grid-cols-12 gap-2 items-center">
+                        <span class="col-span-4 text-[10px] font-bold text-neutral-800 tracking-wider uppercase">Role</span>
+                        <span class="col-span-8 text-[11px] font-semibold text-neutral-600 capitalize">: {{ Auth::user()->role ?? 'Admin' }}</span>
                     </div>
                 </div>
+
+                <!-- QR Code (Tampil di layar dan juga akan dicapture html2canvas) -->
+                @if(Auth::user()->login_token)
+                <div class="px-8 flex justify-center mt-auto">
+                    <div class="p-2 bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.05)] border border-neutral-100 inline-block">
+                        <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={{ Auth::user()->login_token }}&color=241B16" crossorigin="anonymous" class="w-[140px] h-[140px] block" alt="Login QR">
+                    </div>
+                </div>
+                @else
+                <div class="px-8 flex justify-center mt-auto">
+                    <div class="w-[140px] h-[140px] bg-rose-50 flex items-center justify-center rounded-xl border border-rose-100 text-center p-4">
+                        <span class="text-[10px] font-bold text-rose-600 leading-tight">Token Login Belum Tersedia</span>
+                    </div>
+                </div>
+                @endif
             </div>
 
             <!-- Action Buttons -->
-            <div class="w-full max-w-[280px] space-y-2.5">
-                <button type="button" class="w-full px-4 py-2.5 bg-[#006A8E] hover:bg-[#005877] text-white text-xs font-bold rounded-lg shadow-sm transition-all flex items-center justify-center space-x-2">
+            <div class="w-full max-w-[320px] space-y-3 pt-2">
+                <button type="button" class="w-full py-3.5 bg-[#006A8E] hover:bg-[#005877] text-white text-sm font-bold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                     <span>Edit Profil Saya</span>
                 </button>
                 
                 @if(Auth::user()->login_token)
-                <button onclick="downloadIDCard()" id="btnDownloadID" class="w-full px-4 py-2.5 bg-[#10B981] hover:bg-[#059669] text-white text-xs font-bold rounded-lg shadow-sm transition-all flex items-center justify-center space-x-2">
+                <button onclick="downloadIDCard()" id="btnDownloadID" class="w-full py-3.5 bg-[#10B981] hover:bg-[#059669] text-white text-sm font-bold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                     <span>Download ID Card</span>
                 </button>
-                <p class="text-[9px] text-neutral-500 text-center leading-relaxed mt-2 px-2">
-                    Gunakan QR Code pada ID Card untuk login instan tanpa menggunakan password (Sign in with ID Card).
+                <p class="text-[10px] text-neutral-500 text-center leading-relaxed mt-4 px-2">
+                    Gunakan QR Code pada ID Card ini untuk login instan tanpa menggunakan password (Sign in with ID Card).
                 </p>
-
-                <!-- Hidden QR for Download generation -->
-                <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={{ Auth::user()->login_token }}&color=241B16" crossorigin="anonymous" class="hidden" alt="Login QR">
-                @else
-                <div class="w-full p-3 bg-rose-50 text-rose-600 rounded-lg text-center border border-rose-100">
-                    <p class="text-[10px] font-bold">Token Login Belum Tersedia</p>
-                    <p class="text-[9px] mt-0.5 opacity-80">Harap hubungi Superadmin.</p>
-                </div>
                 @endif
             </div>
         </div>
@@ -205,21 +214,12 @@ function downloadIDCard() {
 function generateIDCanvas(card, btn, originalText) {
     // Generate an off-screen clone for proper download formatting
     const downloadCard = card.cloneNode(true);
-    downloadCard.style.width = '300px';
-    downloadCard.style.height = '480px';
-    downloadCard.style.padding = '20px';
+    // Make sure it has specific dimensions for high-quality export
+    downloadCard.style.width = '320px';
+    downloadCard.style.padding = '0';
     downloadCard.style.backgroundColor = 'white';
-    
-    // Add the QR code dynamically to the clone for the exported image
-    const qrSection = document.createElement('div');
-    qrSection.className = 'w-full flex justify-center mt-auto pb-4';
-    const qrImg = document.getElementById('qr-image').cloneNode(true);
-    qrImg.className = 'w-32 h-32 block mx-auto border-4 border-white shadow-sm rounded-lg';
-    qrImg.style.display = 'block';
-    
-    // If you want QR at the bottom
-    downloadCard.appendChild(qrSection);
-    qrSection.appendChild(qrImg);
+    downloadCard.style.borderRadius = '24px';
+    downloadCard.style.overflow = 'hidden';
 
     // Hide it but put in DOM
     downloadCard.style.position = 'absolute';
