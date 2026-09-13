@@ -34,6 +34,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('admin.login.submit');
     Route::post('/login/qr', [AuthController::class, 'qrLogin'])->name('admin.login.qr');
+    Route::get('/login/2fa', [AuthController::class, 'show2faVerify'])->name('admin.login.2fa');
+    Route::post('/login/2fa', [AuthController::class, 'verify2fa'])->name('admin.login.2fa.submit');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout')->middleware('auth');
 });
 
@@ -52,6 +54,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         }
         return view('admin.profile.index'); 
     })->name('profile');
+
+    // 2FA Management Routes
+    Route::get('/profile/2fa/setup', [\App\Http\Controllers\Admin\TwoFactorController::class, 'setup'])->name('2fa.setup');
+    Route::post('/profile/2fa/confirm', [\App\Http\Controllers\Admin\TwoFactorController::class, 'confirm'])->name('2fa.confirm');
+    Route::post('/profile/2fa/disable', [\App\Http\Controllers\Admin\TwoFactorController::class, 'disable'])->name('2fa.disable');
 
     // Orders Management
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

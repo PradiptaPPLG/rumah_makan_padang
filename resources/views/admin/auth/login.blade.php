@@ -161,6 +161,63 @@
             </div>
         </div>
     </div>
+    <!-- 2FA Modal Overlay -->
+    @if(session()->has('2fa_user_id'))
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <!-- Backdrop Blur -->
+        <div class="absolute inset-0 bg-neutral-900/60 backdrop-blur-md"></div>
+        
+        <!-- Modal Content (dari 2fa.blade.php) -->
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden relative z-10 animate-[fadeIn_0.3s_ease-out]">
+            <!-- Red Header -->
+            <div class="bg-[#B91C1C] px-8 py-10 flex flex-col items-center justify-center text-center relative">
+                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/batik-stripes.png')] mix-blend-overlay"></div>
+                
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mb-4 relative z-10 backdrop-blur-sm border border-white/30">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-black text-white mb-1 relative z-10">Keamanan Dua Langkah</h1>
+                <p class="text-white/80 text-sm relative z-10">Otentikasi Dua Faktor (2FA) Aktif</p>
+            </div>
+
+            <!-- Body -->
+            <div class="p-8 text-center">
+                <p class="text-[13px] text-neutral-600 leading-relaxed mb-8">
+                    Buka aplikasi <strong>Google Authenticator</strong> atau aplikasi TOTP lainnya di ponsel Anda untuk melihat kode verifikasi 6 digit saat ini.
+                </p>
+
+                @if(session('error'))
+                <div class="mb-6 p-3 bg-rose-50 text-rose-600 text-xs rounded-lg border border-rose-100 font-semibold">
+                    {{ session('error') }}
+                </div>
+                @endif
+
+                <form action="{{ route('admin.login.2fa.submit') }}" method="POST">
+                    @csrf
+                    <div class="mb-6">
+                        <label class="block text-xs font-bold text-neutral-800 tracking-wider mb-2 uppercase">Masukkan 6 Digit Kode OTP</label>
+                        <input type="text" name="code" maxlength="6" class="w-full px-4 py-4 bg-white border-2 border-neutral-200 rounded-xl text-center text-2xl tracking-[0.3em] font-mono font-bold text-neutral-800 focus:outline-none focus:ring-4 focus:ring-[#B91C1C]/20 focus:border-[#B91C1C] transition-all" placeholder="000000" required autocomplete="off" autofocus>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 bg-[#B91C1C] hover:bg-[#991B1B] text-white font-bold rounded-xl shadow-md transition-all mb-6 text-sm">
+                        Verifikasi & Masuk
+                    </button>
+
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('cancel-2fa-form').submit();" class="text-sm font-medium text-neutral-500 hover:text-neutral-800 transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                        <span>Batal & Kembali</span>
+                    </a>
+                </form>
+                
+                <form id="cancel-2fa-form" action="{{ route('admin.logout') }}" method="POST" class="hidden">
+                    @csrf
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
     
     <script src="https://unpkg.com/html5-qrcode"></script>
     <script>

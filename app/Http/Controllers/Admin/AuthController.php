@@ -38,7 +38,21 @@ class AuthController extends Controller
 
         $remember = $request->boolean('remember');
 
-        if (Auth::attempt($credentials, $remember)) {
+        if (Auth::validate($credentials)) {
+            $user = Auth::getProvider()->retrieveByCredentials($credentials);
+
+            if ($user->two_factor_confirmed_at) {
+                // User has 2FA enabled, don't login fully yet
+                $request->session()->put([
+                    '2fa_user_id' => $user->id,
+                    '2fa_remember' => $remember
+                ]);
+                $this->clearRateLimit($request);
+                return back()->with('show_2fa_modal', true);
+            }
+
+            // Normal login if no 2FA
+            Auth::login($user, $remember);
             $request->session()->regenerate();
             $this->clearRateLimit($request);
             return redirect()->intended(route('admin.dashboard'))->with('success', 'Selamat datang kembali, ' . Auth::user()->name . '!');
@@ -83,6 +97,50 @@ class AuthController extends Controller
             'success' => false,
             'message' => 'Token QR tidak valid atau sudah kadaluarsa.'
         ], 401);
+    }
+
+    /**
+     * Show the 2FA verification page.
+     */
+    public function show2faVerify(Request $request)
+    {
+        if (!$request->session()->has('2fa_user_id')) {
+            return redirect()->route('login');
+        }
+
+        return view('admin.auth.2fa');
+    }
+
+    /**
+     * Verify 2FA OTP and complete login.
+     */
+    public function verify2fa(Request $request)
+    {
+        if (!$request->session()->has('2fa_user_id')) {
+            return redirect()->route('login');
+        }
+
+        $request->validate(['code' => 'required|string|size:6']);
+
+        $user = \App\Models\User::find($request->session()->get('2fa_user_id'));
+        if (!$user || !$user->two_factor_secret) {
+            return redirect()->route('login')->withErrors(['email' => 'Sesi tidak valid.']);
+        }
+
+        $google2fa = new \PragmaRX\Google2FA\Google2FA();
+        $valid = $google2fa->verifyKey($user->two_factor_secret, $request->code);
+
+        if ($valid) {
+            $remember = $request->session()->pull('2fa_remember', false);
+            $request->session()->forget('2fa_user_id');
+
+            Auth::login($user, $remember);
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('admin.dashboard'))->with('success', 'Verifikasi berhasil. Selamat datang kembali, ' . Auth::user()->name . '!');
+        }
+
+        return back()->with('error', 'Kode OTP tidak valid atau sudah kadaluarsa.');
     }
 
     /**

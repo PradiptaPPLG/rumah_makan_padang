@@ -6,103 +6,178 @@
 @section('content')
 <div class="p-6 lg:p-8 space-y-8">
 
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
         
-        <!-- Kolom Kiri: Profil Data -->
-        <div class="md:col-span-7 space-y-6">
-            <div class="bg-white p-8 rounded-3xl border border-[#C9A227]/20 shadow-sm relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#F5EFE2] to-transparent rounded-bl-full opacity-50 pointer-events-none"></div>
-                
-                <h3 class="font-serif font-bold text-xl text-[#7A1F2B] mb-6 border-b border-neutral-100 pb-4">
-                    Informasi Akun
-                </h3>
-                
-                <div class="space-y-5">
-                    <div>
-                        <label class="block text-xs font-bold text-neutral-500 uppercase tracking-wider mb-1.5">Nama Lengkap</label>
-                        <div class="font-medium text-neutral-900 bg-neutral-50 px-4 py-3 rounded-xl border border-neutral-100">
-                            {{ Auth::user()->name }}
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-neutral-500 uppercase tracking-wider mb-1.5">Alamat Email</label>
-                        <div class="font-medium text-neutral-900 bg-neutral-50 px-4 py-3 rounded-xl border border-neutral-100">
-                            {{ Auth::user()->email }}
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-neutral-500 uppercase tracking-wider mb-1.5">Role / Jabatan</label>
-                        <div class="font-medium text-neutral-900 bg-neutral-50 px-4 py-3 rounded-xl border border-neutral-100 flex items-center space-x-2">
-                            <span class="w-2 h-2 rounded-full bg-[#C9A227]"></span>
-                            <span class="capitalize">{{ Auth::user()->role ?? 'Administrator' }}</span>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        <!-- Kolom Kanan: ID Card Gamification / QR -->
-        <div class="md:col-span-5 flex flex-col items-center">
+        <!-- Kolom Kiri: ID Card & Action Buttons -->
+        <div class="md:col-span-5 lg:col-span-4 flex flex-col items-center space-y-4">
             
-            <h3 class="font-serif font-bold text-lg text-neutral-800 mb-6 text-center">
-                ID Card Anda
-            </h3>
-
-            <!-- ID Card Element (Visible, style like physical card) -->
-            <div id="id-card-element" class="w-[280px] h-[440px] bg-white rounded-[24px] shadow-2xl relative overflow-hidden flex flex-col mb-8 border border-neutral-200">
-                
+            <!-- ID Card Element -->
+            <div id="id-card-element" class="w-full max-w-[280px] bg-white rounded-3xl shadow-lg relative overflow-hidden flex flex-col border border-neutral-100">
                 <!-- Notch/Slot for lanyard -->
-                <div class="absolute top-3 left-1/2 transform -translate-x-1/2 w-16 h-3 bg-neutral-100 rounded-full border border-neutral-200 shadow-inner z-20"></div>
+                <div class="absolute top-3 left-1/2 transform -translate-x-1/2 w-16 h-3 bg-white/30 rounded-full border border-white/50 shadow-inner z-20 backdrop-blur-sm"></div>
 
-                <!-- Top Red Header -->
-                <div class="h-32 bg-[#7A1F2B] relative flex flex-col items-center justify-center pt-4">
+                <!-- Top Header Gradient -->
+                <div class="h-32 bg-gradient-to-br from-[#7A1F2B] to-[#9A2A38] relative flex flex-col items-center justify-center pt-4">
                     <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/batik-stripes.png')] mix-blend-overlay"></div>
-                    <h2 class="font-serif font-black text-2xl text-white tracking-wide z-10">Raso Mandeh</h2>
-                    <p class="text-[#C9A227] text-[10px] font-bold uppercase tracking-widest mt-0.5 z-10">Staff ID Card</p>
                 </div>
 
                 <!-- Profile Picture placeholder -->
-                <div class="flex justify-center -mt-10 relative z-20">
-                    <div class="w-20 h-20 rounded-2xl bg-white p-1 shadow-lg transform rotate-3">
-                        <div class="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-xl flex items-center justify-center overflow-hidden relative">
-                            <!-- Avatar Letter -->
-                            <span class="text-3xl font-serif font-bold text-neutral-500 absolute">{{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}</span>
+                <div class="flex justify-center -mt-12 relative z-20">
+                    <div class="w-24 h-24 rounded-full bg-white p-1 shadow-md">
+                        <div class="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-full flex items-center justify-center overflow-hidden relative border-4 border-white shadow-inner">
+                            <span class="text-4xl font-serif font-bold text-neutral-500 absolute">{{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Body -->
-                <div class="pt-6 px-6 text-center flex-1 flex flex-col">
-                    <h1 class="font-bold text-lg text-neutral-900 leading-tight mb-1">{{ Auth::user()->name }}</h1>
-                    <p class="text-xs font-semibold text-[#7A1F2B] uppercase tracking-wider mb-4">{{ Auth::user()->role ?? 'Administrator' }}</p>
-
-                    <!-- QR Code -->
-                    @if(Auth::user()->login_token)
-                        <div class="p-2 bg-white rounded-xl shadow-sm border border-neutral-100 mx-auto w-fit mb-4">
-                            <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ Auth::user()->login_token }}&color=241B16" crossorigin="anonymous" class="w-[100px] h-[100px]" alt="Login QR">
-                        </div>
-                        <p class="text-[9px] text-neutral-400 leading-tight px-2">Gunakan QR Code ini untuk fitur <strong>Sign in with ID Card</strong> pada halaman Login.</p>
-                    @else
-                        <div class="p-4 bg-neutral-100 rounded-xl mx-auto w-full mb-4 text-center">
-                            <p class="text-xs text-rose-600 font-bold">Token Login Belum Tersedia</p>
-                            <p class="text-[10px] text-neutral-500 mt-1">Harap hubungi Superadmin.</p>
-                        </div>
-                    @endif
+                <!-- Body Text -->
+                <div class="pt-4 px-6 text-center">
+                    <h1 class="font-bold text-lg text-neutral-900 leading-tight mb-1 uppercase">{{ Auth::user()->name }}</h1>
+                    <p class="text-[11px] font-semibold text-[#C9A227] mb-4">{{ Auth::user()->role ?? 'Administrator' }}</p>
+                    <div class="w-16 h-px bg-neutral-200 mx-auto mb-4"></div>
                 </div>
 
-                <!-- Footer -->
-                <div class="h-10 bg-[#241B16] flex items-center justify-center">
-                    <p class="text-[8px] text-neutral-400 tracking-widest uppercase">Valid untuk akses internal</p>
+                <!-- Details Grid -->
+                <div class="px-6 pb-6 text-left space-y-3">
+                    <div class="grid grid-cols-3 gap-2 items-center">
+                        <span class="text-[10px] font-bold text-neutral-800 tracking-wider">EMAIL</span>
+                        <span class="col-span-2 text-xs font-medium text-neutral-600 truncate">: {{ Auth::user()->email }}</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 items-center">
+                        <span class="text-[10px] font-bold text-neutral-800 tracking-wider">STATUS</span>
+                        <span class="col-span-2 text-xs font-bold text-emerald-600 flex items-center gap-1">
+                            <span>:</span> 
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Aktif
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 items-center">
+                        <span class="text-[10px] font-bold text-neutral-800 tracking-wider">ROLE</span>
+                        <span class="col-span-2 text-xs font-medium text-neutral-600 capitalize">: {{ Auth::user()->role ?? 'Admin' }}</span>
+                    </div>
                 </div>
             </div>
 
-            @if(Auth::user()->login_token)
-            <button onclick="downloadIDCard()" id="btnDownloadID" class="px-6 py-3 bg-[#C9A227] hover:bg-[#b38e1e] text-white font-bold rounded-xl shadow-md transition-all flex items-center space-x-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-                </svg>
-                <span>Unduh ID Card</span>
-            </button>
-            @endif
+            <!-- Action Buttons -->
+            <div class="w-full max-w-[280px] space-y-2.5">
+                <button type="button" class="w-full px-4 py-2.5 bg-[#006A8E] hover:bg-[#005877] text-white text-xs font-bold rounded-lg shadow-sm transition-all flex items-center justify-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                    <span>Edit Profil Saya</span>
+                </button>
+                
+                @if(Auth::user()->login_token)
+                <button onclick="downloadIDCard()" id="btnDownloadID" class="w-full px-4 py-2.5 bg-[#10B981] hover:bg-[#059669] text-white text-xs font-bold rounded-lg shadow-sm transition-all flex items-center justify-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Download ID Card</span>
+                </button>
+                <p class="text-[9px] text-neutral-500 text-center leading-relaxed mt-2 px-2">
+                    Gunakan QR Code pada ID Card untuk login instan tanpa menggunakan password (Sign in with ID Card).
+                </p>
+
+                <!-- Hidden QR for Download generation -->
+                <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={{ Auth::user()->login_token }}&color=241B16" crossorigin="anonymous" class="hidden" alt="Login QR">
+                @else
+                <div class="w-full p-3 bg-rose-50 text-rose-600 rounded-lg text-center border border-rose-100">
+                    <p class="text-[10px] font-bold">Token Login Belum Tersedia</p>
+                    <p class="text-[9px] mt-0.5 opacity-80">Harap hubungi Superadmin.</p>
+                </div>
+                @endif
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Detail Data -->
+        <div class="md:col-span-7 lg:col-span-8 space-y-6">
+            
+            <!-- Keamanan 2FA Panel -->
+            <div class="bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-neutral-100 flex items-center space-x-2 bg-neutral-50/50">
+                    <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    <h3 class="font-bold text-sm text-neutral-800">Keamanan Dua Langkah (2FA)</h3>
+                </div>
+                
+                @if(session('success'))
+                <div class="px-6 py-3 bg-emerald-50 text-emerald-700 text-xs font-bold flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    <span>{{ session('success') }}</span>
+                </div>
+                @endif
+                
+                @if(session('info'))
+                <div class="px-6 py-3 bg-blue-50 text-blue-700 text-xs font-bold flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>{{ session('info') }}</span>
+                </div>
+                @endif
+
+                <div class="p-6 md:flex items-center justify-between gap-6">
+                    <div class="flex-1 mb-4 md:mb-0">
+                        <p class="text-[11px] text-neutral-500 leading-relaxed mb-3">
+                            Tambahkan lapisan keamanan ekstra pada akun Anda. Setelah diaktifkan, masuk ke sistem memerlukan password dan kode verifikasi satu kali (OTP) dari aplikasi Google Authenticator di perangkat seluler Anda.
+                        </p>
+                        <div class="flex items-center space-x-2 text-[11px] font-bold">
+                            <span class="text-neutral-500 uppercase tracking-wider">Status 2FA:</span>
+                            @if(Auth::user()->two_factor_confirmed_at)
+                                <span class="text-emerald-600">AKTIF</span>
+                            @else
+                                <span class="text-rose-600">TIDAK AKTIF</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 shrink-0">
+                        @if(Auth::user()->two_factor_confirmed_at)
+                            <form action="{{ route('admin.2fa.disable') }}" method="POST">
+                                @csrf
+                                <button type="submit" onclick="return confirm('Yakin ingin menonaktifkan 2FA? Keamanan akun Anda akan menurun.')" class="px-4 py-2 bg-[#E14848] hover:bg-[#c93b3b] text-white text-xs font-semibold rounded-lg transition-colors shadow-sm flex items-center space-x-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
+                                    <span>Nonaktifkan 2FA</span>
+                                </button>
+                            </form>
+                        @else
+                            <a href="{{ route('admin.2fa.setup') }}" class="px-4 py-2 bg-[#006A8E] hover:bg-[#005877] text-white text-xs font-semibold rounded-lg transition-colors shadow-sm flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                <span>Aktifkan 2FA Sekarang</span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informasi Lengkap Panel -->
+            <div class="bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-neutral-100 bg-neutral-50/50">
+                    <h3 class="font-bold text-sm text-neutral-800">Informasi Lengkap Administrator</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <!-- Grid Items -->
+                        <div class="p-4 border border-neutral-100 rounded-xl bg-white shadow-sm">
+                            <p class="text-[10px] text-neutral-400 font-bold uppercase tracking-wider mb-1">Nama Lengkap</p>
+                            <p class="text-sm font-semibold text-neutral-800">{{ Auth::user()->name }}</p>
+                        </div>
+                        
+                        <div class="p-4 border border-neutral-100 rounded-xl bg-white shadow-sm">
+                            <p class="text-[10px] text-neutral-400 font-bold uppercase tracking-wider mb-1">Email Utama</p>
+                            <p class="text-sm font-semibold text-[#006A8E]">{{ Auth::user()->email }}</p>
+                        </div>
+
+                        <div class="p-4 border border-neutral-100 rounded-xl bg-white shadow-sm">
+                            <p class="text-[10px] text-neutral-400 font-bold uppercase tracking-wider mb-1">Role Jabatan</p>
+                            <p class="text-sm font-semibold text-neutral-800 capitalize">{{ Auth::user()->role ?? 'Admin Pusat' }}</p>
+                        </div>
+
+                        <div class="p-4 border border-neutral-100 rounded-xl bg-white shadow-sm">
+                            <p class="text-[10px] text-neutral-400 font-bold uppercase tracking-wider mb-1">Terdaftar Sejak</p>
+                            <p class="text-sm font-semibold text-neutral-800">{{ Auth::user()->created_at ? Auth::user()->created_at->format('d M Y') : '10 Aug 2026' }}</p>
+                        </div>
+                        
+                        <div class="col-span-1 sm:col-span-2 p-4 border border-neutral-100 rounded-xl bg-white shadow-sm">
+                            <p class="text-[10px] text-neutral-400 font-bold uppercase tracking-wider mb-1">Hak Akses Sistem</p>
+                            <p class="text-sm font-semibold text-neutral-800">Semua Fitur (Manajemen Pesanan, POS Kasir, Laporan Keuangan)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -128,8 +203,31 @@ function downloadIDCard() {
 }
 
 function generateIDCanvas(card, btn, originalText) {
+    // Generate an off-screen clone for proper download formatting
+    const downloadCard = card.cloneNode(true);
+    downloadCard.style.width = '300px';
+    downloadCard.style.height = '480px';
+    downloadCard.style.padding = '20px';
+    downloadCard.style.backgroundColor = 'white';
+    
+    // Add the QR code dynamically to the clone for the exported image
+    const qrSection = document.createElement('div');
+    qrSection.className = 'w-full flex justify-center mt-auto pb-4';
+    const qrImg = document.getElementById('qr-image').cloneNode(true);
+    qrImg.className = 'w-32 h-32 block mx-auto border-4 border-white shadow-sm rounded-lg';
+    qrImg.style.display = 'block';
+    
+    // If you want QR at the bottom
+    downloadCard.appendChild(qrSection);
+    qrSection.appendChild(qrImg);
+
+    // Hide it but put in DOM
+    downloadCard.style.position = 'absolute';
+    downloadCard.style.left = '-9999px';
+    document.body.appendChild(downloadCard);
+
     // For html2canvas, scale up to make it crisp
-    html2canvas(card, {
+    html2canvas(downloadCard, {
         scale: 3,
         useCORS: true,
         backgroundColor: null
@@ -141,11 +239,13 @@ function generateIDCanvas(card, btn, originalText) {
         
         btn.innerHTML = originalText;
         btn.disabled = false;
+        downloadCard.remove();
     }).catch(err => {
         console.error(err);
         alert('Gagal mengunduh ID Card.');
         btn.innerHTML = originalText;
         btn.disabled = false;
+        downloadCard.remove();
     });
 }
 </script>
