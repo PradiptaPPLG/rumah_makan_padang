@@ -33,6 +33,7 @@ Route::get('/pesanan/{token}', [ApiOrderController::class, 'orderStatus'])->name
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('admin.login.submit');
+    Route::post('/login/qr', [AuthController::class, 'qrLogin'])->name('admin.login.qr');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout')->middleware('auth');
 });
 
@@ -43,6 +44,14 @@ Route::prefix('admin')->group(function () {
 */
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', function () { 
+        $user = Auth::user();
+        if (empty($user->login_token)) {
+            $user->login_token = \Illuminate\Support\Str::random(60);
+            $user->save();
+        }
+        return view('admin.profile.index'); 
+    })->name('profile');
 
     // Orders Management
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

@@ -21,10 +21,12 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle the admin login attempt.
+     * Handle the admin login attempt with Dynamic Rate Limiting.
      */
     public function login(Request $request)
     {
+        $this->checkRateLimit($request);
+
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
@@ -38,12 +40,107 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
+            $this->clearRateLimit($request);
             return redirect()->intended(route('admin.dashboard'))->with('success', 'Selamat datang kembali, ' . Auth::user()->name . '!');
         }
+
+        $this->hitRateLimit($request);
 
         return back()->withErrors([
             'email' => 'Email atau kata sandi yang Anda masukkan salah.',
         ])->onlyInput('email');
+    }
+
+    /**
+     * Handle the admin QR Login attempt.
+     */
+    public function qrLogin(Request $request)
+    {
+        $request->validate([
+            'login_token' => 'required|string'
+        ]);
+
+        $user = \App\Models\User::where('login_token', $request->login_token)->first();
+
+        if ($user) {
+            Auth::login($user, true);
+            $request->session()->regenerate();
+            
+            // Clear rate limits if they had any for their email, though IP might be different
+            // We'll just let it expire on its own or clear it based on email
+            $failsKey = 'login_fails:' . \Illuminate\Support\Str::lower($user->email) . '|' . $request->ip();
+            $lockKey = 'login_locked:' . \Illuminate\Support\Str::lower($user->email) . '|' . $request->ip();
+            cache()->forget($failsKey);
+            cache()->forget($lockKey);
+
+            return response()->json([
+                'success' => true,
+                'redirect' => route('admin.dashboard')
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Token QR tidak valid atau sudah kadaluarsa.'
+        ], 401);
+    }
+
+    /**
+     * Check if user is locked out due to rate limit.
+     */
+    protected function checkRateLimit(Request $request)
+    {
+        $lockKey = 'login_locked:' . \Illuminate\Support\Str::lower($request->input('email', '')) . '|' . $request->ip();
+        
+        if (cache()->has($lockKey)) {
+            $unlockTime = cache()->get($lockKey);
+            $seconds = $unlockTime - time();
+            
+            if ($seconds > 0) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'email' => "Terlalu banyak percobaan login salah. Akun dikunci sementara. Silakan coba lagi dalam " . ceil($seconds / 60) . " menit.",
+                ]);
+            } else {
+                cache()->forget($lockKey);
+            }
+        }
+    }
+
+    /**
+     * Hit the rate limiter on failed attempt.
+     */
+    protected function hitRateLimit(Request $request)
+    {
+        $failsKey = 'login_fails:' . \Illuminate\Support\Str::lower($request->input('email', '')) . '|' . $request->ip();
+        $lockKey = 'login_locked:' . \Illuminate\Support\Str::lower($request->input('email', '')) . '|' . $request->ip();
+        
+        if (!cache()->has($failsKey)) {
+            cache()->put($failsKey, 0, now()->addHours(6)); 
+        }
+        
+        $fails = cache()->increment($failsKey);
+        
+        if ($fails >= 5) {
+            $multiplier = $fails - 5; 
+            if ($multiplier > 4) $multiplier = 4; // Max 5 hours
+            
+            $minutes = pow(5, $multiplier);
+            if ($minutes > 300) $minutes = 300;
+            
+            cache()->put($lockKey, time() + ($minutes * 60), now()->addMinutes($minutes));
+        }
+    }
+
+    /**
+     * Clear the rate limiter on success.
+     */
+    protected function clearRateLimit(Request $request)
+    {
+        $failsKey = 'login_fails:' . \Illuminate\Support\Str::lower($request->input('email', '')) . '|' . $request->ip();
+        $lockKey = 'login_locked:' . \Illuminate\Support\Str::lower($request->input('email', '')) . '|' . $request->ip();
+        
+        cache()->forget($failsKey);
+        cache()->forget($lockKey);
     }
 
     /**

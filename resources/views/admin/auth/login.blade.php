@@ -66,68 +66,90 @@
             </div>
             @endif
 
-            <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-4">
-                @csrf
-                
-                <div>
-                    <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Email <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
+            <div x-data="loginScanner()">
+                <!-- State: Form Login Normal -->
+                <div x-show="mode === 'form'" class="space-y-4">
+                    <form method="POST" action="{{ route('admin.login.submit') }}" class="space-y-4">
+                        @csrf
+                        
+                        <div>
+                            <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Email <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                </div>
+                                <input type="email" name="email" value="{{ old('email', 'admin@rasomandeh.com') }}" required autofocus class="w-full pl-9 pr-3 py-2 border border-neutral-300 rounded focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] outline-none text-xs transition-colors" placeholder="nama@rasomandeh.com">
+                            </div>
                         </div>
-                        <input type="email" name="email" value="{{ old('email', 'admin@rasomandeh.com') }}" required autofocus class="w-full pl-9 pr-3 py-2 border border-neutral-300 rounded focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] outline-none text-xs transition-colors" placeholder="nama@rasomandeh.com">
-                    </div>
-                </div>
 
-                <div x-data="{ showPass: false }">
-                    <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Password <span class="text-red-500">*</span></label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                            </svg>
+                        <div x-data="{ showPass: false }">
+                            <label class="block text-[11px] font-semibold text-neutral-700 mb-1">Password <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-400">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                </div>
+                                <input :type="showPass ? 'text' : 'password'" name="password" value="password" required class="w-full pl-9 pr-9 py-2 border border-neutral-300 rounded focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] outline-none text-xs transition-colors" placeholder="Password">
+                                <button type="button" @click="showPass = !showPass" class="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-neutral-600">
+                                    <svg x-show="!showPass" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    <svg x-show="showPass" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+                                </button>
+                            </div>
                         </div>
-                        <input :type="showPass ? 'text' : 'password'" name="password" value="password" required class="w-full pl-9 pr-9 py-2 border border-neutral-300 rounded focus:border-[#7A1F2B] focus:ring-1 focus:ring-[#7A1F2B] outline-none text-xs transition-colors" placeholder="Password">
-                        <button type="button" @click="showPass = !showPass" class="absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-400 hover:text-neutral-600">
-                            <svg x-show="!showPass" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                            <svg x-show="showPass" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>
+
+                        <div class="flex items-center justify-between pt-1">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" name="remember" class="rounded-[2px] border-neutral-300 text-[#7A1F2B] focus:ring-[#7A1F2B] w-3 h-3">
+                                <span class="text-[11px] text-neutral-500">Ingat saya</span>
+                            </label>
+                            <a href="#" class="text-[11px] font-bold text-[#7A1F2B] hover:underline">Lupa password?</a>
+                        </div>
+
+                        <button type="submit" class="w-full bg-[#7A1F2B] hover:bg-[#5a1620] text-white font-bold py-2.5 px-4 rounded transition-colors text-xs mt-2 shadow-sm">
+                            Masuk
                         </button>
+                    </form>
+                    
+                    <div class="relative py-3">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-neutral-200"></div>
+                        </div>
+                        <div class="relative flex justify-center text-[10px]">
+                            <span class="px-2 bg-white text-neutral-400">Atau</span>
+                        </div>
                     </div>
+
+                    <button type="button" @click="startScanner()" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-bold py-2.5 px-4 rounded transition-colors text-xs shadow-sm flex items-center justify-center space-x-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                        </svg>
+                        <span>Scan ID Card (QR Login)</span>
+                    </button>
                 </div>
 
-                <div class="flex items-center justify-between pt-1">
-                    <label class="flex items-center space-x-2 cursor-pointer">
-                        <input type="checkbox" name="remember" class="rounded-[2px] border-neutral-300 text-[#7A1F2B] focus:ring-[#7A1F2B] w-3 h-3">
-                        <span class="text-[11px] text-neutral-500">Ingat saya</span>
-                    </label>
-                    <a href="#" class="text-[11px] font-bold text-[#7A1F2B] hover:underline">Lupa password?</a>
-                </div>
-
-                <button type="submit" class="w-full bg-[#7A1F2B] hover:bg-[#5a1620] text-white font-bold py-2.5 px-4 rounded transition-colors text-xs mt-2 shadow-sm">
-                    Masuk
-                </button>
-                
-                <!-- Demo login info styling matched to the screenshot's secondary button -->
-                <div class="relative py-3">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-neutral-200"></div>
+                <!-- State: QR Scanner -->
+                <div x-show="mode === 'scan'" style="display: none;" class="space-y-4">
+                    <h3 class="font-bold text-center text-sm text-neutral-800">Scan QR ID Card</h3>
+                    <p class="text-xs text-center text-neutral-500 mb-2">Arahkan kamera ke ID Card Anda untuk login otomatis.</p>
+                    
+                    <div id="qr-reader" class="w-full bg-neutral-900 rounded-xl overflow-hidden aspect-square relative border border-neutral-200"></div>
+                    
+                    <!-- Loading Status -->
+                    <div x-show="loading" class="text-center py-2">
+                        <span class="text-xs font-bold text-[#7A1F2B] animate-pulse">Memverifikasi ID Card...</span>
                     </div>
-                    <div class="relative flex justify-center text-[10px]">
-                        <span class="px-2 bg-white text-neutral-400">Atau</span>
-                    </div>
+
+                    <!-- Error Alert -->
+                    <div x-show="errorMsg" class="bg-rose-50 text-rose-600 text-xs p-3 rounded text-center font-semibold" x-text="errorMsg"></div>
+
+                    <button type="button" @click="stopScanner()" class="w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-bold py-2.5 px-4 rounded transition-colors text-xs mt-2">
+                        Batal / Kembali
+                    </button>
                 </div>
-
-                <!-- Green secondary button imitating the "Sign in with ID Card" -->
-                <button type="button" onclick="alert('Email: admin@rasomandeh.com | Password: password')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-bold py-2.5 px-4 rounded transition-colors text-xs shadow-sm flex items-center justify-center space-x-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/>
-                    </svg>
-                    <span>Gunakan Demo Akun Admin</span>
-                </button>
-
-            </form>
+            </div>
 
             <div class="mt-auto pt-8 text-center">
                 <p class="text-[9px] text-neutral-400 uppercase tracking-wider">
@@ -139,5 +161,92 @@
             </div>
         </div>
     </div>
+    
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('loginScanner', () => ({
+            mode: 'form', // 'form' or 'scan'
+            loading: false,
+            errorMsg: '',
+            html5QrcodeScanner: null,
+            
+            startScanner() {
+                this.mode = 'scan';
+                this.errorMsg = '';
+                
+                // Need a slight delay for Alpine to unhide the div
+                setTimeout(() => {
+                    if(this.html5QrcodeScanner) {
+                        this.html5QrcodeScanner.clear();
+                        this.html5QrcodeScanner = null;
+                    }
+                    
+                    this.html5QrcodeScanner = new Html5QrcodeScanner(
+                        "qr-reader", { fps: 10, qrbox: 250, aspectRatio: 1.0 }
+                    );
+                    
+                    this.html5QrcodeScanner.render(
+                        (decodedText) => {
+                            this.html5QrcodeScanner.clear(); 
+                            this.processQrLogin(decodedText);
+                        },
+                        (errorMessage) => { }
+                    );
+                }, 100);
+            },
+            
+            stopScanner() {
+                this.mode = 'form';
+                if(this.html5QrcodeScanner) {
+                    this.html5QrcodeScanner.clear();
+                    this.html5QrcodeScanner = null;
+                }
+            },
+
+            processQrLogin(token) {
+                this.loading = true;
+                this.errorMsg = '';
+                
+                fetch('{{ route('admin.login.qr') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ login_token: token })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    this.loading = false;
+                    if(data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        this.errorMsg = data.message || 'Token QR tidak valid.';
+                        // Restart scanner after error
+                        setTimeout(() => this.startScanner(), 2000);
+                    }
+                })
+                .catch(error => {
+                    this.loading = false;
+                    this.errorMsg = 'Terjadi kesalahan jaringan.';
+                    setTimeout(() => this.startScanner(), 2000);
+                });
+            }
+        }));
+    });
+    </script>
+    <style>
+    #qr-reader { border: none !important; }
+    #qr-reader__scan_region { background-color: #171717; }
+    #qr-reader__dashboard_section_csr span { color: #fff !important; }
+    #qr-reader button {
+        background-color: #C9A227; color: white; border: none;
+        padding: 8px 16px; border-radius: 8px; font-weight: bold;
+        cursor: pointer; margin-top: 10px; width: 100%; font-size: 11px;
+    }
+    #qr-reader select { padding: 8px; border-radius: 8px; margin-bottom: 10px; width: 100%; font-size: 11px;}
+    </style>
 </body>
 </html>
