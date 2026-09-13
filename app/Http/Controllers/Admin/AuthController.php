@@ -144,6 +144,15 @@ class AuthController extends Controller
     }
 
     /**
+     * Cancel 2FA login process.
+     */
+    public function cancel2fa(Request $request)
+    {
+        $request->session()->forget(['2fa_user_id', '2fa_remember']);
+        return redirect()->route('login');
+    }
+
+    /**
      * Check if user is locked out due to rate limit.
      */
     protected function checkRateLimit(Request $request)

@@ -36,6 +36,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login/qr', [AuthController::class, 'qrLogin'])->name('admin.login.qr');
     Route::get('/login/2fa', [AuthController::class, 'show2faVerify'])->name('admin.login.2fa');
     Route::post('/login/2fa', [AuthController::class, 'verify2fa'])->name('admin.login.2fa.submit');
+    Route::post('/login/2fa/cancel', [AuthController::class, 'cancel2fa'])->name('admin.login.2fa.cancel');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout')->middleware('auth');
 });
 

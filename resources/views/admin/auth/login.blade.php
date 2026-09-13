@@ -170,7 +170,7 @@
         <!-- Modal Content (dari 2fa.blade.php) -->
         <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden relative z-10 animate-[fadeIn_0.3s_ease-out]">
             <!-- Red Header -->
-            <div class="bg-[#B91C1C] px-8 py-10 flex flex-col items-center justify-center text-center relative">
+            <div class="bg-[#7A1F2B] px-8 py-10 flex flex-col items-center justify-center text-center relative">
                 <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/batik-stripes.png')] mix-blend-overlay"></div>
                 
                 <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mb-4 relative z-10 backdrop-blur-sm border border-white/30">
@@ -198,10 +198,10 @@
                     @csrf
                     <div class="mb-6">
                         <label class="block text-xs font-bold text-neutral-800 tracking-wider mb-2 uppercase">Masukkan 6 Digit Kode OTP</label>
-                        <input type="text" name="code" maxlength="6" class="w-full px-4 py-4 bg-white border-2 border-neutral-200 rounded-xl text-center text-2xl tracking-[0.3em] font-mono font-bold text-neutral-800 focus:outline-none focus:ring-4 focus:ring-[#B91C1C]/20 focus:border-[#B91C1C] transition-all" placeholder="000000" required autocomplete="off" autofocus>
+                        <input type="text" name="code" maxlength="6" class="w-full px-4 py-4 bg-white border-2 border-neutral-200 rounded-xl text-center text-2xl tracking-[0.3em] font-mono font-bold text-neutral-800 focus:outline-none focus:ring-4 focus:ring-[#7A1F2B]/20 focus:border-[#7A1F2B] transition-all" placeholder="000000" required autocomplete="off" autofocus>
                     </div>
 
-                    <button type="submit" class="w-full py-3.5 bg-[#B91C1C] hover:bg-[#991B1B] text-white font-bold rounded-xl shadow-md transition-all mb-6 text-sm">
+                    <button type="submit" class="w-full py-3.5 bg-[#7A1F2B] hover:bg-[#5a1620] text-white font-bold rounded-xl shadow-md transition-all mb-6 text-sm">
                         Verifikasi & Masuk
                     </button>
 
@@ -211,7 +211,7 @@
                     </a>
                 </form>
                 
-                <form id="cancel-2fa-form" action="{{ route('admin.logout') }}" method="POST" class="hidden">
+                <form id="cancel-2fa-form" action="{{ route('admin.login.2fa.cancel') }}" method="POST" class="hidden">
                     @csrf
                 </form>
             </div>
