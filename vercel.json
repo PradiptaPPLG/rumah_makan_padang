@@ -3,7 +3,10 @@
     "framework": null,
     "functions": {
         "api/index.php": {
-            "runtime": "vercel-php@0.7.3"
+            "runtime": "vercel-php@0.7.3",
+            "config": {
+                "phpVersion": "8.2"
+            }
         }
     },
     "routes": [
@@ -35,7 +38,6 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie",
-        "VERCEL_PHP_VERSION": "8.3"
+        "SESSION_DRIVER": "cookie"
     }
 }
