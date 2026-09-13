@@ -85,8 +85,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('/menu/{id}/toggle', [MenuController::class, 'toggleActive'])->name('menu.toggleActive');
     Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
 
-    // System Logs
+    // System Logs & Guide
     Route::get('/logs', [\App\Http\Controllers\SystemLogController::class, 'index'])->name('logs.index');
+    Route::view('/guide', 'admin.guide.index')->name('guide.index');
 
     // Tables Management
     Route::resource('tables', \App\Http\Controllers\Admin\TableController::class)->except(['create', 'show', 'edit']);
