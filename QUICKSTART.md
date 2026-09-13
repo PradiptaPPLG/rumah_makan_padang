@@ -1,115 +1,118 @@
 # 🚀 Quick Start Guide - Raso Mandeh
 
-Langkah cepat untuk menjalankan project secara lokal.
+Panduan instalasi dan persiapan lokal untuk proyek *Raso Mandeh* (Sistem ERP, Kasir POS & Pemesanan).
 
 ## 📋 Prerequisites Checklist
 
-- [ ] PHP 8.2+ installed
-- [ ] MySQL 8.0+ running
-- [ ] Node.js 18+ installed
-- [ ] Composer installed
-- [ ] Git installed
+Pastikan lingkungan lokal (mesin/PC) Anda sudah terinstal:
+- [ ] PHP 8.2 atau yang lebih baru
+- [ ] MySQL 8.0 atau yang lebih baru
+- [ ] Node.js 18 atau yang lebih baru
+- [ ] Composer
+- [ ] Git
 
-## 🎯 Quick Setup (5 Minutes)
+## 🎯 Panduan Instalasi (5 Menit)
 
 ### 1️⃣ Database Setup
+
+Buat database baru melalui terminal/command prompt MySQL, atau gunakan GUI seperti phpMyAdmin/DBeaver.
 
 ```bash
 # Login to MySQL
 mysql -u root -p
 
-# Create database
-CREATE DATABASE raso_minang;
+# Create database (Contoh nama: rumah_makan_padang)
+CREATE DATABASE rumah_makan_padang;
 exit
 ```
 
-### 2️⃣ Backend Setup
+### 2️⃣ Pengaturan Proyek & Dependency
+
+Proyek ini menggunakan arsitektur monolitik Laravel. Semua dependensi (PHP dan JS) harus diinstal di direktori akar (root).
 
 ```bash
-cd backend
+# Buka terminal dan masuk ke direktori proyek
+cd rumah_makan_padang
 
-# Install dependencies
+# Install dependensi PHP (Laravel)
 composer install
 
+# Install dependensi NPM (Tailwind & Vite)
+npm install
+```
+
+### 3️⃣ Konfigurasi Environment (.env)
+
+Gandakan file `.env.example` menjadi `.env`, lalu konfigurasi koneksi database Anda.
+
+```bash
 # Copy environment file
 cp .env.example .env
 
-# Generate key
+# Generate application key
 php artisan key:generate
-
-# Run migrations
-php artisan migrate
-
-# Start server
-php artisan serve --port=8000
+```
+**Penting:** Buka file `.env` dan pastikan kredensial database sudah benar:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=rumah_makan_padang
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
-✅ Backend running at: http://localhost:8000
+### 4️⃣ Setup Storage & Database Migration
 
-### 3️⃣ Frontend Setup
+Langkah ini **sangat penting** agar fitur unggah gambar (seperti unggah Foto Profil Admin dan Menu) dapat berjalan.
 
 ```bash
-cd frontend
+# Menghubungkan folder public dengan storage (WAJIB DILAKUKAN)
+php artisan storage:link
 
-# Install dependencies
-npm install
+# Jalankan semua migrasi tabel ke dalam database
+php artisan migrate
+```
+*(Catatan: Jika ada error saat migrasi, pastikan XAMPP/MySQL Anda sudah berjalan dan nama database cocok dengan `.env`).*
 
-# Configure environment
-echo 'NEXT_PUBLIC_API_URL=http://localhost:8000/api' >> .env.local
+### 5️⃣ Menjalankan Aplikasi Lokal
 
-# Start dev server
+Anda memerlukan **dua terminal** yang berjalan secara bersamaan: satu untuk *server* PHP, dan satu lagi untuk kompiler aset Vite (Frontend CSS/JS).
+
+**Terminal 1 (Backend Server):**
+```bash
+php artisan serve
+```
+
+**Terminal 2 (Frontend Vite Server):**
+```bash
 npm run dev
 ```
 
-✅ Frontend running at: http://localhost:3000
-
-## 🎨 Access Points
-
-- **Main Website**: http://localhost:3000
-- **API Documentation**: http://localhost:8000/api/v1/branches
-- **Admin Panel** (optional): `/admin` after installing Filament
-
-## 🔍 Test API Endpoints
-
-```bash
-# Get all branches
-curl http://localhost:8000/api/v1/branches
-
-# Get menu items
-curl http://localhost:8000/api/v1/menu-items
-
-# Get branches with full menu & prices
-curl http://localhost:8000/api/v1/branches-with-menu
-```
-
-## 🛠️ Troubleshooting
-
-### Issue: Migration errors
-```bash
-# Check database connection in .env
-php artisan config:clear
-php artisan migrate:fresh
-```
-
-### Issue: API not responding
-```bash
-# Verify backend is running on port 8000
-lsof -i :8000
-```
-
-### Issue: Frontend can't connect
-```bash
-# Check .env.local has correct URL
-cat frontend/.env.local
-```
-
-## 📝 Next Steps
-
-1. ✅ Add sample data to database
-2. 🎨 Customize colors in tailwind.config.ts
-3. 👤 Set up admin panel with Filament
-4. 🚀 Deploy to production
+✅ **Selesai!** Aplikasi sudah dapat diakses melalui browser Anda di URL:
+- Halaman Pelanggan (Utama): [http://localhost:8000](http://localhost:8000)
+- Panel Admin (Login): [http://localhost:8000/admin/login](http://localhost:8000/admin/login)
 
 ---
 
-Need help? Check README.md for detailed documentation.
+## 🛠️ Panduan Tambahan / Troubleshooting
+
+### Perubahan File CSS (Tailwind)
+Jika Anda mengubah file `.blade.php` atau menambah *class* Tailwind, Anda **wajib** menyalakan `npm run dev`. Namun jika ingin mem-build aset untuk produksi tanpa menyalakan server Vite terus-menerus, jalankan:
+```bash
+npm run build
+```
+
+### Aplikasi Tidak Bisa Menampilkan Foto Profil
+Pastikan Anda sudah menjalankan perintah `php artisan storage:link`. Jika sebelumnya Anda memakai Windows dan *symlink* gagal (atau shortcut `storage` di folder `public` *corrupt*), silakan hapus shortcut `public/storage` lama dan jalankan `php artisan storage:link` kembali lewat Command Prompt mode Administrator.
+
+### Reset Database
+Jika database berantakan atau Anda ingin mengembalikannya ke skema awal yang bersih:
+```bash
+php artisan migrate:fresh
+```
+
+## 📝 Next Steps
+- 🔑 **Uji Login Admin:** Pastikan login, verifikasi 2FA, dan fitur *ID Card* berjalan lancar.
+- 🎨 **Cek UI:** Pastikan tidak ada desain yang pecah (*build* Vite jika iya).
+- 🐛 **Bantuan:** Periksa log di folder `storage/logs/laravel.log` jika menemui pesan *500 Server Error*.

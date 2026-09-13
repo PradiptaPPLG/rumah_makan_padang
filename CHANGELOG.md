@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Integrasi *Two-Factor Authentication* (2FA) menggunakan *Google Authenticator* (Chillerlan QRCode) yang ditautkan ke akun masing-masing admin (mendukung banyak *device* untuk akun yang sama).
+- Tampilan notifikasi *banner* kuning peringatan 2FA (otomatis muncul di semua halaman admin jika 2FA belum aktif).
+- Fitur *System Logs* (Log Sistem) terpusat untuk melacak semua aktivitas Admin (Login, aksi, dll) termasuk IP Address, menggunakan model `SystemLog`.
+- Implementasi fungsionalitas unggah foto profil kustom dengan pemotongan *1:1 aspect ratio* presisi menggunakan `Cropper.js` (dengan CDN ringan).
+- Pembaruan mekanisme rute (`routes/web.php`) untuk mengakomodasi fitur pengunggahan foto profil (`admin.profile.photo`) dan pembacaan *Activity Logs* (`admin.logs.index`).
+- Penambahan properti tabel database `profile_photo_path` pada entitas `User` beserta *accessor* *photo URL*-nya.
+- Penambahan tautan ke *Buku Panduan* dan *Log Sistem* di bagian *Sidebar* Menu Dasbor Admin.
+
+### Changed
+- Perombakan total antarmuka UI *ID Card* profil menjadi lebih premium bergaya kopdes, dengan foto asli pengguna, desain kartu 100% responsif, serta pengaturan ulang tombol navigasi.
+- Mengubah mekanisme cetak *ID Card* (menggunakan `html2canvas`); menyembunyikan QR code dari layar namun secara dinamis menempatkannya langsung di dalam hasil file `.png` (unduhan akhir kartu ID).
+- Menghapus badge/tulisan indikator "Sistem Kasir Aktif" dari struktur atas *header* navigasi Admin.
+- Mengecilkan *font-size* dan rasio empuk (*padding*) pada menu-menu navigasi *sidebar*, serta logo utama, guna mencegah terjadinya *vertical scrolling* pada layar berukuran standar.
+- Menghapus garis aksen (emas/kuning) pada komponen avatar di pojok *navbar*, mengembalikan kesan *clean UI*.
 - Migrasi `add_role_and_phone_to_users_table`: tambah kolom `role` (admin/cashier/customer/warehouse_staff/kitchen), `phone`, dan `is_active` ke tabel `users` — menyatukan aktor ERD (ADMINS, CASHIERS) ke satu tabel sesuai arsitektur Laravel RBAC.
 - Migrasi `add_order_fields_to_orders_table`: tambah kolom `order_number` (nomor unik per transaksi), `order_type` (dine_in/takeaway), `table_number`, `qr_code_token` (untuk QR Order pelanggan), `source` (pos/customer_web/qr_scan), `payment_status`, dan `cashier_id` FK ke tabel `orders`.
 - Migrasi `create_payments_table`: tabel baru `payments` dengan dukungan metode `cash` dan `qris`, kolom `cash_given`/`change_amount` untuk kembalian tunai, `reference_number` untuk kode QRIS, dan `status` pembayaran.
