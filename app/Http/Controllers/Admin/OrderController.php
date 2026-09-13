@@ -25,7 +25,7 @@ class OrderController extends Controller
             $query->where('method', $request->method);
         }
 
-        $orders = $query->paginate(15)->withQueryString();
+        $orders = $query->paginate(10)->withQueryString();
         $branches = Branch::where('is_active', true)->get();
 
         return view('admin.orders.index', compact('orders', 'branches'));

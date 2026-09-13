@@ -26,7 +26,7 @@ class MenuController extends Controller
             });
         }
 
-        $menuItems = $query->paginate(12)->withQueryString();
+        $menuItems = $query->paginate(10)->withQueryString();
 
         $categories = [
             'daging' => 'Lauk Daging',
@@ -50,6 +50,7 @@ class MenuController extends Controller
             'badge' => 'nullable|in:Signature,Favorit,Baru',
             'rating' => 'nullable|numeric|min:0|max:5',
             'harga' => 'required|numeric|min:0',
+            'stock_quantity' => 'nullable|integer|min:0',
         ]);
 
         $defaultFoto = '/menu/nasi-padang-rendang.webp';
@@ -57,6 +58,16 @@ class MenuController extends Controller
 
         if ($request->hasFile('foto_file')) {
             $fotoPath = $webpUploadService->uploadAndConvertToWebp($request->file('foto_file'), 'menu');
+        }
+
+        $stock = $validated['stock_quantity'] ?? null;
+        $status = 'tersedia';
+        if ($stock !== null) {
+            if ((int)$stock === 0) {
+                $status = 'habis';
+            } elseif ((int)$stock <= 5) {
+                $status = 'hampir_habis';
+            }
         }
 
         $menuItem = MenuItem::create([
@@ -67,6 +78,8 @@ class MenuController extends Controller
             'badge' => $validated['badge'] ?? null,
             'rating' => $validated['rating'] ?? 5.0,
             'is_active' => true,
+            'availability_status' => $status,
+            'stock_quantity' => $stock,
         ]);
 
         // Seed prices for all branches
@@ -94,6 +107,7 @@ class MenuController extends Controller
             'badge' => 'nullable|in:Signature,Favorit,Baru',
             'rating' => 'nullable|numeric|min:0|max:5',
             'harga' => 'required|numeric|min:0',
+            'stock_quantity' => 'nullable|integer|min:0',
         ]);
 
         $menuItem = MenuItem::findOrFail($id);
@@ -105,6 +119,16 @@ class MenuController extends Controller
             $fotoPath = $request->input('foto');
         }
 
+        $stock = $validated['stock_quantity'] ?? null;
+        $status = 'tersedia';
+        if ($stock !== null) {
+            if ((int)$stock === 0) {
+                $status = 'habis';
+            } elseif ((int)$stock <= 5) {
+                $status = 'hampir_habis';
+            }
+        }
+
         $menuItem->update([
             'nama' => $validated['nama'],
             'kategori' => $validated['kategori'],
@@ -112,6 +136,8 @@ class MenuController extends Controller
             'foto' => $fotoPath,
             'badge' => $validated['badge'] ?? null,
             'rating' => $validated['rating'] ?? $menuItem->rating,
+            'availability_status' => $status,
+            'stock_quantity' => $stock,
         ]);
 
         // Update branch menu prices base

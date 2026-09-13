@@ -15,6 +15,8 @@ class MenuItem extends Model
         'badge',
         'rating',
         'is_active',
+        'availability_status',
+        'stock_quantity',
     ];
 
     protected $casts = [

@@ -7,7 +7,7 @@
 <div x-data="{ 
         isAddModalOpen: false, 
         isEditModalOpen: false, 
-        editItem: { id: null, nama: '', kategori: 'daging', deskripsi: '', foto: '', badge: '', rating: 5.0, harga: 30000 } 
+        editItem: { id: null, nama: '', kategori: 'daging', deskripsi: '', foto: '', badge: '', rating: 5.0, harga: 30000, stock_quantity: null } 
      }" 
      class="space-y-5">
     
@@ -58,7 +58,7 @@
                         <th class="py-3 px-5">Kategori</th>
                         <th class="py-3 px-5">Badge & Rating</th>
                         <th class="py-3 px-5">Harga Porsi</th>
-                        <th class="py-3 px-5">Ketersediaan</th>
+                        <th class="py-3 px-5 text-center">Stok & Status</th>
                         <th class="py-3 px-5 text-right">Aksi</th>
                     </tr>
                 </thead>
@@ -100,10 +100,17 @@
                         <td class="py-3 px-5 font-bold text-neutral-900 whitespace-nowrap">
                             Rp {{ number_format($basePrice, 0, ',', '.') }}
                         </td>
-                        <td class="py-3 px-5 whitespace-nowrap">
+                        <td class="py-3 px-5 text-center whitespace-nowrap space-y-1.5">
+                            <div class="text-[11px] font-bold text-neutral-700">
+                                @if($item->stock_quantity !== null)
+                                    Sisa Stok: <span class="{{ $item->stock_quantity <= 5 ? 'text-rose-600' : 'text-emerald-600' }}">{{ $item->stock_quantity }} porsi</span>
+                                @else
+                                    Stok: <span class="text-neutral-400">Tak Terbatas</span>
+                                @endif
+                            </div>
                             <form action="{{ route('admin.menu.toggleActive', $item->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors
+                                <button type="submit" class="px-2.5 py-0.5 rounded-full text-[10px] font-semibold transition-colors
                                     {{ $item->is_active ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60 hover:bg-emerald-100' : 'bg-neutral-100 text-neutral-500 border border-neutral-200 hover:bg-neutral-200' }}"
                                     title="Klik untuk mengubah ketersediaan">
                                     {{ $item->is_active ? '● Aktif' : '○ Non-aktif' }}
@@ -111,32 +118,50 @@
                             </form>
                         </td>
                         <td class="py-3 px-5 text-right whitespace-nowrap">
-                            <div class="flex items-center justify-end space-x-1.5">
-                                <button @click="editItem = {
-                                            id: {{ $item->id }},
-                                            nama: '{{ addslashes($item->nama) }}',
-                                            kategori: '{{ $item->kategori }}',
-                                            deskripsi: '{{ addslashes($item->deskripsi) }}',
-                                            foto: '{{ $item->foto }}',
-                                            badge: '{{ $item->badge }}',
-                                            rating: {{ $item->rating }},
-                                            harga: {{ $basePrice }}
-                                        }; isEditModalOpen = true" 
-                                        class="p-1.5 rounded-lg text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
-                                        title="Edit">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                            <div x-data="{ openMenu: false }" class="inline-block text-left relative">
+                                <button @click="openMenu = !openMenu" @click.away="openMenu = false" 
+                                        class="p-2 rounded-xl text-neutral-400 hover:text-[#7A1F2B] hover:bg-[#F5EFE2] transition-colors focus:outline-none"
+                                        title="Opsi Aksi">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
                                     </svg>
                                 </button>
-                                <form action="{{ route('admin.menu.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus hidangan ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="p-1.5 rounded-lg text-neutral-400 hover:text-rose-600 hover:bg-rose-50 transition-colors" title="Hapus">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                        </svg>
+                                
+                                <!-- Dropdown Menu -->
+                                <div x-show="openMenu" 
+                                     x-transition:enter="transition ease-out duration-100"
+                                     x-transition:enter-start="transform opacity-0 scale-95"
+                                     x-transition:enter-end="transform opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-75"
+                                     x-transition:leave-start="transform opacity-100 scale-100"
+                                     x-transition:leave-end="transform opacity-0 scale-95"
+                                     class="absolute right-0 mt-1 w-36 bg-white rounded-xl shadow-lg border border-[#C9A227]/20 z-50 py-1.5 overflow-hidden"
+                                     style="display: none;"
+                                     x-cloak>
+                                     
+                                    <button @click="editItem = {
+                                                id: {{ $item->id }},
+                                                nama: '{{ addslashes($item->nama) }}',
+                                                kategori: '{{ $item->kategori }}',
+                                                deskripsi: '{{ addslashes($item->deskripsi) }}',
+                                                foto: '{{ $item->foto }}',
+                                                badge: '{{ $item->badge }}',
+                                                rating: {{ $item->rating }},
+                                                harga: {{ $basePrice }},
+                                                stock_quantity: {{ $item->stock_quantity ?? 'null' }}
+                                            }; isEditModalOpen = true; openMenu = false" 
+                                            class="w-full text-left px-4 py-2 text-xs font-medium text-neutral-700 hover:bg-[#F5EFE2] hover:text-[#7A1F2B] transition-colors">
+                                        Edit Hidangan
                                     </button>
-                                </form>
+                                    
+                                    <form action="{{ route('admin.menu.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus hidangan ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="w-full text-left px-4 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 transition-colors">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -194,7 +219,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-3 gap-3">
                         <div>
                             <label class="block font-semibold text-neutral-700 mb-1">Badge</label>
                             <select name="badge" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 bg-white outline-none">
@@ -207,6 +232,10 @@
                         <div>
                             <label class="block font-semibold text-neutral-700 mb-1">Rating</label>
                             <input type="number" step="0.1" min="1" max="5" name="rating" value="4.8" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-neutral-700 mb-1" title="Kosongkan jika stok tak terbatas">Stok (Opsional)</label>
+                            <input type="number" min="0" name="stock_quantity" placeholder="Tak Terbatas" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
                         </div>
                     </div>
 
@@ -278,7 +307,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-3 gap-3">
                         <div>
                             <label class="block font-semibold text-neutral-700 mb-1">Badge</label>
                             <select name="badge" x-model="editItem.badge" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 bg-white outline-none">
@@ -291,6 +320,10 @@
                         <div>
                             <label class="block font-semibold text-neutral-700 mb-1">Rating</label>
                             <input type="number" step="0.1" min="1" max="5" name="rating" x-model="editItem.rating" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-neutral-700 mb-1" title="Kosongkan jika stok tak terbatas">Stok (Opsional)</label>
+                            <input type="number" min="0" name="stock_quantity" x-model="editItem.stock_quantity" placeholder="Tak Terbatas" class="w-full text-xs p-2.5 rounded-xl border border-neutral-300 outline-none">
                         </div>
                     </div>
 

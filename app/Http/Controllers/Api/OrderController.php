@@ -22,7 +22,7 @@ class OrderController extends Controller
             $query->where('status', $request->status);
         }
 
-        $orders = $query->orderByDesc('created_at')->paginate(15);
+        $orders = $query->orderByDesc('created_at')->paginate(10);
 
         return response()->json([
             'success' => true,
@@ -51,11 +51,19 @@ class OrderController extends Controller
             $price = BranchMenuPrice::where('branch_id', $validated['branch_id'])
                 ->where('menu_item_id', $item['menu_item_id'])
                 ->first();
+            $menuModel = \App\Models\MenuItem::find($item['menu_item_id']);
 
-            if (! $price || ! $price->is_available) {
+            if (! $price || ! $price->is_available || ($menuModel && $menuModel->availability_status === 'habis')) {
                 return response()->json([
                     'success' => false,
-                    'message' => "Menu dengan ID {$item['menu_item_id']} tidak tersedia di cabang ini.",
+                    'message' => "Menu dengan ID {$item['menu_item_id']} tidak tersedia.",
+                ], 422);
+            }
+
+            if ($menuModel && $menuModel->stock_quantity !== null && $menuModel->stock_quantity < $item['quantity']) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Stok untuk menu {$menuModel->nama} tidak mencukupi. Sisa stok: {$menuModel->stock_quantity} porsi.",
                 ], 422);
             }
 
@@ -87,6 +95,23 @@ class OrderController extends Controller
                 'price' => $item['price'],
                 'notes' => $item['notes'] ?? null,
             ]);
+
+            // Decrement Stock
+            $menuModel = \App\Models\MenuItem::find($item['menu_item_id']);
+            if ($menuModel && $menuModel->stock_quantity !== null) {
+                $newStock = max(0, $menuModel->stock_quantity - $item['quantity']);
+                $status = 'tersedia';
+                if ($newStock === 0) {
+                    $status = 'habis';
+                } elseif ($newStock <= 5) {
+                    $status = 'hampir_habis';
+                }
+
+                $menuModel->update([
+                    'stock_quantity' => $newStock,
+                    'availability_status' => $status
+                ]);
+            }
         }
 
         return response()->json([
