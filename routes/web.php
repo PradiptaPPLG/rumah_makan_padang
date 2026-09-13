@@ -45,6 +45,11 @@ Route::prefix('admin')->group(function () {
 | Protected Admin Panel Routes (Auth Required)
 |--------------------------------------------------------------------------
 */
+// Kasir POS (Dedicated Interface)
+Route::middleware('auth')->group(function () {
+    Route::get('/kasir', [\App\Http\Controllers\Admin\KasirController::class, 'index'])->name('kasir.index');
+});
+
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', function () { 

@@ -146,12 +146,19 @@
                 </div>
 
                 <div class="space-y-2 pt-2">
+                    <div class="bg-amber-50 p-2 rounded-lg border border-amber-200 text-center mb-2">
+                        <span class="text-[10px] text-amber-800 font-medium">
+                            <svg class="w-3.5 h-3.5 inline mb-0.5 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Tunjukkan QR ke kasir untuk melakukan pembayaran.
+                        </span>
+                    </div>
+
                     <button @click="checkout()" 
                             class="w-full bg-[#C9A227] hover:bg-[#B38F23] text-[#241B16] py-3.5 px-4 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
                         </svg>
-                        <span>Konfirmasi Pesanan</span>
+                        <span>Buat QR Pesanan</span>
                     </button>
                     
                     <button @click="clearCart()" class="w-full text-xs text-[#241B16]/60 hover:text-rose-700 py-1 font-medium transition-colors">
