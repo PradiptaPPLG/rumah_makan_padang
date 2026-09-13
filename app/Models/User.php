@@ -21,13 +21,27 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_photo_path',
         'role',
         'phone',
         'is_active',
         'login_token',
         'two_factor_secret',
+        'two_factor_recovery_codes',
         'two_factor_confirmed_at',
     ];
+
+    /**
+     * Get the URL to the user's profile photo.
+     *
+     * @return string
+     */
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->profile_photo_path
+                    ? asset('storage/' . $this->profile_photo_path)
+                    : null;
+    }
 
     /**
      * @var array<int, string>

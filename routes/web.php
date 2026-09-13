@@ -55,6 +55,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         }
         return view('admin.profile.index'); 
     })->name('profile');
+    Route::post('/profile/photo', [\App\Http\Controllers\Admin\AdminController::class, 'updatePhoto'])->name('profile.photo');
 
     // 2FA Management Routes
     Route::get('/profile/2fa/setup', [\App\Http\Controllers\Admin\TwoFactorController::class, 'setup'])->name('2fa.setup');
