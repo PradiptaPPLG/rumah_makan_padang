@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\ReviewController;
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/orders', [ApiOrderController::class, 'store'])->name('orders.store');
+Route::post('/reservation', [HomeController::class, 'storeReservation'])->name('reservation.store');
 
 // Halaman form cari pesanan pelanggan
 Route::get('/cek-pesanan', [ApiOrderController::class, 'showSearch'])->name('order.search.form');
@@ -86,6 +87,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // System Logs
     Route::get('/logs', [\App\Http\Controllers\SystemLogController::class, 'index'])->name('logs.index');
+
+    // Tables Management
+    Route::resource('tables', \App\Http\Controllers\Admin\TableController::class)->except(['create', 'show', 'edit']);
 
     // Branches Management
     Route::get('/branches', [BranchController::class, 'index'])->name('branches.index');

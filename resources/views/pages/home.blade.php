@@ -18,6 +18,9 @@
     <!-- Heritage Story Section -->
     @include('components.cerita-kami')
 
+    <!-- Reservation Section -->
+    @include('components.reservation-form')
+
     <!-- Customer Reviews / Testimonials Section -->
     @include('components.testimonial-section')
 @endsection

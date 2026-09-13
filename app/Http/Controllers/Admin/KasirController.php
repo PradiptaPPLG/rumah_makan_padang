@@ -16,8 +16,20 @@ class KasirController extends Controller
     {
         $branches = Branch::where('is_active', true)->get();
         // Mengambil semua menu yang aktif untuk ditampilkan di grid kasir
-        $menuItems = MenuItem::where('is_active', true)->orderBy('category')->orderBy('name')->get();
+        $menuItems = MenuItem::where('is_active', true)
+            ->with(['branchPrices'])
+            ->orderBy('kategori')
+            ->orderBy('nama')
+            ->get()
+            ->map(function ($item) {
+                // Determine a display price (from first branch price or default)
+                $firstPrice = $item->branchPrices->first();
+                $item->display_price = $firstPrice ? (float) $firstPrice->harga : 25000;
+                return $item;
+            });
 
-        return view('kasir.index', compact('branches', 'menuItems'));
+        $tables = \App\Models\Table::where('is_active', true)->get();
+
+        return view('kasir.index', compact('branches', 'menuItems', 'tables'));
     }
 }

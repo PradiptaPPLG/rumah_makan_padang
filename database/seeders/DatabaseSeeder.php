@@ -29,6 +29,10 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $this->call([
+            TableSeeder::class,
+        ]);
+
         // 1. Seed Branches
         $branchesData = [
             [

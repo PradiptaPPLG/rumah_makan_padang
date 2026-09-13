@@ -118,6 +118,15 @@
                             <span>Cabang Restoran</span>
                         </a>
 
+                        <a href="{{ route('admin.tables.index') }}" 
+                           class="flex items-center space-x-3 px-3 py-2.5 rounded-2xl font-medium text-[13px] transition-all duration-200
+                           {{ request()->routeIs('admin.tables.*') ? 'bg-[#7A1F2B] text-white shadow-md shadow-[#7A1F2B]/20 font-semibold' : 'text-neutral-600 hover:bg-[#F5EFE2] hover:text-[#7A1F2B]' }}">
+                            <svg class="w-5 h-5 {{ request()->routeIs('admin.tables.*') ? 'text-[#C9A227]' : 'text-neutral-400' }} transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z"/>
+                            </svg>
+                            <span>Kapasitas Meja</span>
+                        </a>
+
                         <a href="{{ route('admin.reviews.index') }}" 
                            class="flex items-center justify-between px-3 py-2.5 rounded-2xl font-medium text-[13px] transition-all duration-200
                            {{ request()->routeIs('admin.reviews.*') ? 'bg-[#7A1F2B] text-white shadow-md shadow-[#7A1F2B]/20 font-semibold' : 'text-neutral-600 hover:bg-[#F5EFE2] hover:text-[#7A1F2B]' }}">

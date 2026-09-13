@@ -114,6 +114,12 @@ class OrderController extends Controller
             }
         }
 
+        if ($order->method === 'dine-in' && $request->table_number) {
+            \App\Models\Table::where('branch_id', $order->branch_id)
+                ->where('table_number', $request->table_number)
+                ->update(['status' => 'occupied']);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Pesanan berhasil dibuat!',

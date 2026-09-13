@@ -44,4 +44,20 @@ class HomeController extends Controller
 
         return view('pages.home', compact('branches', 'menuItems', 'reviews', 'categories'));
     }
+
+    public function storeReservation(Request $request)
+    {
+        $validated = $request->validate([
+            'branch_id' => 'required|exists:branches,id',
+            'customer_name' => 'required|string|max:255',
+            'customer_phone' => 'required|string|max:20',
+            'reservation_time' => 'required|date|after:now',
+            'guest_count' => 'required|integer|min:1|max:20',
+            'notes' => 'nullable|string'
+        ]);
+
+        \App\Models\Reservation::create($validated);
+
+        return redirect()->back()->withFragment('booking-section')->with('success_booking', 'Terima kasih, permintaan reservasi meja Anda berhasil dikirim. Tim kami akan segera menghubungi Anda untuk konfirmasi!');
+    }
 }

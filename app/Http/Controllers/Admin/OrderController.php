@@ -46,6 +46,13 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->update(['status' => $request->status]);
 
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Status pesanan #{$order->id} berhasil diperbarui menjadi {$request->status}!"
+            ]);
+        }
+
         return redirect()->back()->with('success', "Status pesanan #{$order->id} berhasil diperbarui menjadi {$request->status}!");
     }
 
